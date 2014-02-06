@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
- <PROCESS-ITEM NAME="rules:#pages#greeting.xhtml"
-  PATH="/pages/greeting.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#pages#start.xhtml" PATH="/pages/start.xhtml"
-  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#pages#start.xhtml:0" NAME="item"
-   PATH="/pages/start.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="greeting::#pages#greeting.xhtml"
-    NAME="output" PATH="/pages/greeting.xhtml"
-    TARGET="rules:#pages#greeting.xhtml" TITLE="greeting" model-entity="JSFProcessItemOutput"/>
+ <PROCESS-ITEM NAME="rules:#backgroundpages#greeting.xhtml"
+  PATH="/backgroundpages/greeting.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#backgroundpages#start.xhtml"
+  PATH="/backgroundpages/start.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#backgroundpages#start.xhtml:0" NAME="item"
+   PATH="/backgroundpages/start.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="greeting::#backgroundpages#greeting.xhtml"
+    NAME="output" PATH="/backgroundpages/greeting.xhtml"
+    TARGET="rules:#backgroundpages#greeting.xhtml" TITLE="greeting" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#index0.xhtml" PATH="/index0.xhtml"
   SHAPE="179,161,0,0" model-entity="JSFProcessGroup" persistent="true"/>
- <PROCESS-ITEM NAME="rules:#pages#test.jsf" PATH="/pages/test.jsf"
-  SHAPE="201,249,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#backgroundpages#test.jsf"
+  PATH="/backgroundpages/test.jsf" SHAPE="201,249,0,0"
+  model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>
