@@ -25,6 +25,12 @@ public class UserCriteria {
 	private int maxDistance;
 	private Map<String,Object> movies;
 	private String selectedMovie;
+	private String optionCinema1="Sony Center";
+	private String optionCinema2="Toshiba Center";
+	private String optionCinema3="Fujitsu Center";
+	private String optionRestaurant1="Amrit";
+	private String optionRestaurant2="Calcutta";
+	private String optionRestaurant3="Heer";
 	
 	public void updateMoviesListener()
 	{
@@ -142,7 +148,45 @@ public class UserCriteria {
 	public void setMaxDistance(int maxDistance) {
 		this.maxDistance = maxDistance;
 	}
+	
+	
 
+	public String getOptionCinema1() {
+		return optionCinema1;
+	}
+	public void setOptionCinema1(String optionCinema1) {
+		this.optionCinema1 = optionCinema1;
+	}
+	public String getOptionCinema2() {
+		return optionCinema2;
+	}
+	public void setOptionCinema2(String optionCinema2) {
+		this.optionCinema2 = optionCinema2;
+	}
+	public String getOptionCinema3() {
+		return optionCinema3;
+	}
+	public void setOptionCinema3(String optionCinema3) {
+		this.optionCinema3 = optionCinema3;
+	}
+	public String getOptionRestaurant1() {
+		return optionRestaurant1;
+	}
+	public void setOptionRestaurant1(String optionRestaurant1) {
+		this.optionRestaurant1 = optionRestaurant1;
+	}
+	public String getOptionRestaurant2() {
+		return optionRestaurant2;
+	}
+	public void setOptionRestaurant2(String optionRestaurant2) {
+		this.optionRestaurant2 = optionRestaurant2;
+	}
+	public String getOptionRestaurant3() {
+		return optionRestaurant3;
+	}
+	public void setOptionRestaurant3(String optionRestaurant3) {
+		this.optionRestaurant3 = optionRestaurant3;
+	}
 	public void callJanani()
 	{
 		System.out.println("janani method called");
