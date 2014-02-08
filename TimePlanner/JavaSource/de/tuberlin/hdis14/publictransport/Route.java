@@ -41,7 +41,7 @@ public class Route {
 		this.departure_time = i; 
 	}
 	
-	public String getArrivalTimeFormatted(){
+	public String getArrivalTimeFormatted(){ 
 			
 		Date date = new Date(arrival_time*1000L); // *1000 is to convert seconds to milliseconds
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
