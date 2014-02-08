@@ -29,6 +29,10 @@ public class RestaurantImpl implements IRestaurant {
 
 	OAuthService service;
 	Token accessToken;
+	
+	public RestaurantImpl(){
+		
+	}
 
 	/**
 	 * Setup the Yelp API OAuth credentials.

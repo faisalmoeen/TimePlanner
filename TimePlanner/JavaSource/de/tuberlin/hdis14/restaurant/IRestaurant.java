@@ -4,6 +4,7 @@
 package de.tuberlin.hdis14.restaurant;
 
 import java.util.List;
+import java.util.Map;
 
 import de.tuberlin.hdis14.cinema.Cinema;
 
@@ -13,6 +14,5 @@ import de.tuberlin.hdis14.cinema.Cinema;
  */
 public interface IRestaurant {
 	
-	public List<Restaurant> getRestaurants(Cinema cinema, String cuisine, String type,
-			int radius);
+	public Map<List<Cinema>, List<Restaurant>> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance);
 }
