@@ -5,7 +5,7 @@ public class Route {
 	
 	//UNIX format
 	private int arrival_time;   
-	private int departure_time; 
+	private long departure_time; 
 	private int duration; //in sec
 	private int distance; //in meters
 	private String start_address;
@@ -14,7 +14,7 @@ public class Route {
 	
 	public Route(){}
 	
-	public Route(int arrival_time, int departure_time, int duration,
+	public Route(int arrival_time, long departure_time, int duration,
 			int distance, String start_address, String end_address) {
 		
 		this.arrival_time = arrival_time;
@@ -30,10 +30,10 @@ public class Route {
 	public void setArrival_time(int i) {
 		this.arrival_time = i;
 	}
-	public int getDeparture_time() {
+	public long getDeparture_time() {
 		return departure_time;
 	}
-	public void setDeparture_time(int i) {
+	public void setDeparture_time(long i) {
 		this.departure_time = i;
 	}
 	public int getDuration() {
