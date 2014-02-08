@@ -13,5 +13,6 @@ import de.tuberlin.hdis14.cinema.Cinema;
  */
 public interface IRestaurant {
 	
-	public List<Restaurant> getRestaurants(Cinema cinema,String cuisineType,String radius);
+	public List<Restaurant> getRestaurants(Cinema cinema, String cuisine, String type,
+			int radius);
 }

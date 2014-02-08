@@ -6,6 +6,7 @@ package de.tuberlin.hdis14.restaurant;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
@@ -62,18 +63,71 @@ public class RestaurantImpl implements IRestaurant {
 	 *            Longitude
 	 * @return JSON string response
 	 */
-	public String search(String term, String radius, String location) {
+	public String search(String type,String term, String radius, String location) {
 		OAuthRequest request = new OAuthRequest(Verb.GET,
 				"http://api.yelp.com/v2/search");
-		request.addQuerystringParameter("restaurants", term);
-		request.addQuerystringParameter("location", location);
-		request.addQuerystringParameter("radius_filter", radius);
+
+		String cuisineType="restaurants";
+			if(type.equalsIgnoreCase("Bar")) {
+				cuisineType ="bars";
+			} else if(type.equalsIgnoreCase("Cafe")){
+				cuisineType ="cafes";
+			}
+		    //request.addQuerystringParameter("term", term);
+			String cuisine="german";
+			if(term.equalsIgnoreCase("Chinese")){
+				cuisine="chinese";
+				
+			}else if(term.equalsIgnoreCase("Japanese")){
+				cuisine="japanese";
+			}else if(term.equalsIgnoreCase("Italian")){
+				cuisine="italian";
+			}else if(term.equalsIgnoreCase("Indisch")){
+				cuisine="indpak";
+			}else if(term.equalsIgnoreCase("German")){
+				cuisine="german";
+			}else if(term.equalsIgnoreCase("French")){
+				cuisine="french";
+			}else if(term.equalsIgnoreCase("Cocktail")){
+				cuisine="cocktail";
+			}
+			
+			if(!radius.equals("")){
+				 request.addQuerystringParameter("radius_filter", radius);
+			}
+		   if(cuisineType.equalsIgnoreCase("cafes")){
+			   request.addQuerystringParameter("term", cuisineType);  
+		   }else{
+			   request.addQuerystringParameter("term", cuisine+"+"+cuisineType);
+		   }
+			
+			request.addQuerystringParameter("location", location);
+		
 		System.out.println(request.getQueryStringParams());
 		this.service.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();
 	}
 
+	public Map<List<Cinema>, List<Restaurant>> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
+		
+		List<Cinema> cinemaL = callJelena1(startLocation,startTime,cinemaList);
+		List<Restaurant> restList =null;
+		
+		CinemaRestaurant cinemaRestList = new CinemaRestaurant();
+		
+		for(Cinema c : cinemaL){
+			restList = getRestaurants(c, cuisine, type,maxDistance);
+			cinemaRestList.setCinema(c);
+			cinemaRestList.setRestaurantList(restList);
+			restList=null;
+		}
+		
+		Map<List<Cinema>, List<Restaurant>> optmCinemaRest = callJelena2(cinemaRestList);
+		
+		return optmCinemaRest;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,8 +136,8 @@ public class RestaurantImpl implements IRestaurant {
 	 * hdis14.cinema.Cinema, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<Restaurant> getRestaurants(Cinema cinema, String cuisineType,
-			String radius) {
+	public List<Restaurant> getRestaurants(Cinema cinema, String cuisine, String type,
+			int radius) {
 
 		// Update tokens here from Yelp developers site, Manage API access.
 		String consumerKey = "mUNybDa3bIkZyWXJxhuQpg";
@@ -94,7 +148,7 @@ public class RestaurantImpl implements IRestaurant {
 		RestaurantImpl yelp = new RestaurantImpl(consumerKey, consumerSecret,
 				token, tokenSecret);
 		// String response = yelp.search("burritos", 30.361471, -87.164326);
-		String inputJsonString = yelp.search(cuisineType, radius,
+		String inputJsonString = yelp.search(cuisine,type,String.valueOf(radius),
 				cinema.getAddress());
 
 		System.out.println(inputJsonString);
