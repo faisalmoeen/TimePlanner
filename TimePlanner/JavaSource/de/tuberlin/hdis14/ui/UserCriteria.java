@@ -1,12 +1,20 @@
 package de.tuberlin.hdis14.ui;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
+
+import de.tuberlin.hdis14.cinema.Cinema;
+import de.tuberlin.hdis14.restaurant.IRestaurant;
+import de.tuberlin.hdis14.restaurant.Restaurant;
+import de.tuberlin.hdis14.restaurant.RestaurantImpl;
 
 //@ManagedBean(name="userCriteria")
 //@SessionScoped
@@ -31,6 +39,12 @@ public class UserCriteria {
 	private String optionRestaurant1="Amrit";
 	private String optionRestaurant2="Calcutta";
 	private String optionRestaurant3="Heer";
+	
+	//prateek's variable
+	List<Cinema> cinemaList;
+	
+	//State variable
+	Map<Cinema, Restaurant> selectedMap;
 	
 	public void updateMoviesListener()
 	{
@@ -187,12 +201,44 @@ public class UserCriteria {
 	public void setOptionRestaurant3(String optionRestaurant3) {
 		this.optionRestaurant3 = optionRestaurant3;
 	}
+	
 	public void callJanani()
 	{
 		System.out.println("janani method called");
 		System.out.println(this.cuisine);
 		System.out.println(this.type);
 		System.out.println(this.maxDistance);
+		String startLocation = this.houseNumber+","+this.streetAddress+","+this.zipCode;
+		IRestaurant refRestaurant = new RestaurantImpl();
+		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
+		this.selectedMap=mapReturned;
+		
+		
+		 Iterator<Entry<Cinema, Restaurant>> it = mapReturned.entrySet().iterator();
+		 int i=1;
+	       Restaurant restaurant=null;
+	        Cinema cinema = null;
+	        Map.Entry<Cinema, Restaurant> pairs = null;
+		    while (it.hasNext()) {
+		       pairs = it.next();
+		        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+		        cinema = pairs.getKey();
+		        restaurant = pairs.getValue();
+		        if(i==1){
+		        	optionCinema1 = cinema.getTheaterName();
+		        	optionRestaurant1 = restaurant.getName();
+		        }else if(i==2){
+		        	optionCinema2 =cinema.getTheaterName();
+		        	optionRestaurant2 = restaurant.getName();
+		        	
+		        }else if(i==3){
+		        	optionCinema3 =cinema.getTheaterName();
+		        	optionRestaurant3 = restaurant.getName();
+		        }
+		        i++;
+		        //it.remove(); 
+		    }
+	   
 	}
 	
 	

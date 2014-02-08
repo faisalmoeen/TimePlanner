@@ -112,8 +112,8 @@ public class RestaurantImpl implements IRestaurant {
 		Response response = request.send();
 		return response.getBody();
 	}
-
-	public Map<List<Cinema>, List<Restaurant>> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
+	@Override
+	public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
 		
 		List<Cinema> cinemaL = callJelena1(startLocation,startTime,cinemaList);
 		List<Restaurant> restList =null;
@@ -127,7 +127,7 @@ public class RestaurantImpl implements IRestaurant {
 			restList=null;
 		}
 		
-		Map<List<Cinema>, List<Restaurant>> optmCinemaRest = callJelena2(cinemaRestList);
+		Map<Cinema, Restaurant> optmCinemaRest = callJelena2(cinemaRestList);
 		
 		return optmCinemaRest;
 	}
@@ -139,7 +139,6 @@ public class RestaurantImpl implements IRestaurant {
 	 * de.tuberlin.hdis14.restaurant.IRestaurant#getRestaurants(de.tuberlin.
 	 * hdis14.cinema.Cinema, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public List<Restaurant> getRestaurants(Cinema cinema, String cuisine, String type,
 			int radius) {
 

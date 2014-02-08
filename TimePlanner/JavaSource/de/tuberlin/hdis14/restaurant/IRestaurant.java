@@ -14,5 +14,5 @@ import de.tuberlin.hdis14.cinema.Cinema;
  */
 public interface IRestaurant {
 	
-	public Map<List<Cinema>, List<Restaurant>> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance);
+	public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance);
 }
