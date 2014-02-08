@@ -38,7 +38,7 @@ public class Route {
 		return departure_time;
 	}
 	public void setDeparture_time(long i) {
-		this.departure_time = i;
+		this.departure_time = i; 
 	}
 	
 	public String getArrivalTimeFormatted(){
