@@ -131,9 +131,9 @@
                             <h6>Restaurant Preferences</h6>
                                     <label for="type">Type:</label> 
 									<h:selectOneMenu value="#{userCriteria.type}" id="type" styleClass="input_field_small">
-   										<f:selectItem itemValue="Cream Latte" itemLabel="Cream Latte" />
-   										<f:selectItem itemValue="Extreme Mocha" itemLabel="Extreme Mocha" />
-   										<f:selectItem itemValue="Buena Vista" itemLabel="Buena Vista" />
+   										<f:selectItem itemValue="10" itemLabel="Restaurant" />
+   										<f:selectItem itemValue="11" itemLabel="Bar" />
+   										<f:selectItem itemValue="12" itemLabel="Cafe" />
 									</h:selectOneMenu>
                                    <!-- <select name="type" id="type" class="input_field_small">
   										<option value="Cafe">Cafe</option>
@@ -145,9 +145,13 @@
                                     
                                     <label for="cuisine">Cuisine:</label> 
                                     <h:selectOneMenu value="#{userCriteria.cuisine}" id="cuisine" styleClass="input_field_small">
-   										<f:selectItem itemValue="Cream Latte" itemLabel="Cream Latte" />
-   										<f:selectItem itemValue="Extreme Mocha" itemLabel="Extreme Mocha" />
-   										<f:selectItem itemValue="Buena Vista" itemLabel="Buena Vista" />
+   										<f:selectItem itemValue="1" itemLabel="Chinese" />
+   										<f:selectItem itemValue="2" itemLabel="Japanese" />
+   										<f:selectItem itemValue="3" itemLabel="Italian" />
+   										<f:selectItem itemValue="4" itemLabel="Indisch" />
+   										<f:selectItem itemValue="5" itemLabel="German" />
+   										<f:selectItem itemValue="6" itemLabel="French" />
+   										<f:selectItem itemValue="7" itemLabel="Cocktail" />
 									</h:selectOneMenu>
                                     <!-- <select name="cuisine" id="cuisine" class="input_field_small">
   										<option value="italian">Italian</option>
