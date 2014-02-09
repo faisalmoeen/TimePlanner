@@ -4,11 +4,12 @@ import de.tuberlin.hdis14.cinema.*;
 import de.tuberlin.hdis14.restaurant.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IPublicTransport {
 
-	public List<Cinema> getFilteredCinemas(String startAddress,List<Cinema> cinemas, String departureTime);
+	public List<Cinema> callJelena1(String startAddress, String departureTime,List<Cinema> cinemas);
 	
-	public List<CinemaRestaurantRoute> getRoutesCinemaRestaurant(List<Cinema> cinemas,List<Restaurant> restaurants);
+	public Map<List<Cinema>, List<Restaurant>> callJelena2(List<CinemaRestaurant> cinRest);
 
 }

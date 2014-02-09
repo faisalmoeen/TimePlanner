@@ -1,7 +1,7 @@
 package de.tuberlin.hdis14.publictransport;
 
 import de.tuberlin.hdis14.cinema.*;
-import de.tuberlin.hdis14.restaurant.Restaurant;
+import de.tuberlin.hdis14.restaurant.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,8 +9,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
+import java.util.Map;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -32,7 +34,7 @@ public class PublicTransport implements IPublicTransport {
 
 	    
 	@Override
-	public List<Cinema> getFilteredCinemas(String startAddress,List<Cinema> cinemas, String departureTime) {
+	public List<Cinema> callJelena1(String startAddress, String departureTime,List<Cinema> cinemas) {
 		
 		
 		 HttpURLConnection conn = null;
@@ -146,26 +148,37 @@ public class PublicTransport implements IPublicTransport {
 	
 	//core group will call this method to calculate optimal restaurants for each cinema based on route details (duration,...)
 	@Override
-	public List<CinemaRestaurantRoute> getRoutesCinemaRestaurant(List<Cinema> cinemas,List<Restaurant> restaurants) {
+	public Map<List<Cinema>, List<Restaurant>> callJelena2(List<CinemaRestaurant> cinRest) {
+		
+		Map<List<Cinema>, List<Restaurant>> results= new HashMap<List<Cinema>, List<Restaurant>>();
 	
 		List<CinemaRestaurantRoute> allCinemasRestaurantsRoutes= new ArrayList<CinemaRestaurantRoute>();
 		
-		for (int i=0;i<cinemas.size();i++)
+		for (int i=0;i<cinRest.size();i++)
 		{
+		    Cinema cinema=(cinRest.get(i)).getCinema();
+		    CinemaRestaurantRoute crr= new CinemaRestaurantRoute(cinema);
+			List<Restaurant> restaurants= (cinRest.get(i)).getRestaurantList();
 			
 			for(int j=0;j<restaurants.size();j++)
 			{
 			 Route route=calculateRoute(
-					 (cinemas.get(i)).getAddress(), 
+					 cinema.getAddress(), 
 					 (restaurants.get(j)).getRestaurantAddress(), 
 					 "walking",
-					 (cinemas.get(i)).getMovieEndTime()
+					 cinema.getMovieEndTime()
 					 );
-			 allCinemasRestaurantsRoutes.add(new CinemaRestaurantRoute(cinemas.get(i), restaurants.get(j), route));
+			 	
+			 crr.getRestaurantRouteList().put(restaurants.get(j), route);
+			
 			}
+			
+			allCinemasRestaurantsRoutes.add(crr);
 		}
 		
-		return allCinemasRestaurantsRoutes;
+		results= optimize(allCinemasRestaurantsRoutes);
+		
+		return results;
 	}
 	
 	
@@ -402,7 +415,7 @@ public class PublicTransport implements IPublicTransport {
 				 
 				 PublicTransport pt= new PublicTransport();
 
-				 rts=pt.getFilteredCinemas(startAddre,endLoc,"16:30");
+				 rts=pt.callJelena1(startAddre,"16:30",endLoc);
 				 
 				 
 				
