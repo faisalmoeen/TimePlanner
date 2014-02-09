@@ -15,5 +15,5 @@ public interface IOptimization {
 	 * @param cinemaRestList All valid combinations of cinema and restaurant
 	 * @return Map of 3 optimal combinations of cinema and restaurant 
 	 */
-	public Map<List<Cinema>, List<Restaurant>> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList);
+	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList);
 }
