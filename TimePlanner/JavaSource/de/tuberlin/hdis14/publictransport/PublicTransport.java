@@ -254,6 +254,7 @@ public class PublicTransport implements IPublicTransport {
 			                route.setStart_address(legObject.getString("start_address"));
 			                
 			                route.setEnd_address(legObject.getString("end_address"));
+			         
 
 		                }
 		            
@@ -402,6 +403,8 @@ public class PublicTransport implements IPublicTransport {
 				 PublicTransport pt= new PublicTransport();
 
 				 rts=pt.getFilteredCinemas(startAddre,endLoc,"16:30");
+				 
+				 
 				
 				 for(int i=0;i<rts.size();i++)		 
 				 {
