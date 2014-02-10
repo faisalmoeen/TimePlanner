@@ -11,7 +11,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import com.jaunt.NodeNotFound;
+import com.jaunt.ResponseException;
+
 import de.tuberlin.hdis14.cinema.Cinema;
+import de.tuberlin.hdis14.cinema.CinemaDetails;
 import de.tuberlin.hdis14.restaurant.IRestaurant;
 import de.tuberlin.hdis14.restaurant.Restaurant;
 import de.tuberlin.hdis14.restaurant.RestaurantImpl;
@@ -24,6 +28,7 @@ public class UserCriteria {
 	private String streetAddress="theodor heuss platz";
 	private String houseNumber="5";
 	private String zipCode="14052";
+
 	private int persons=6;
 	private Date date;
 	private String time;
@@ -33,6 +38,10 @@ public class UserCriteria {
 	private int maxDistance;
 	private Map<String,Object> movies;
 	private String selectedMovie;
+    private	String durationInfo;
+
+
+
 	private String optionCinema1="Sony Center";
 	private String optionCinema2="Toshiba Center";
 	private String optionCinema3="Fujitsu Center";
@@ -49,11 +58,13 @@ public class UserCriteria {
 	public void updateMoviesListener()
 	{
 		movies = new LinkedHashMap<String,Object>();
-		movies.put("Cream Latte", "Cream Latte"); //label, value
-		movies.put("Extreme Mocha", "Extreme Mocha");
-		movies.put("Buena Vista", "Buena Vista");
+		movies.put("Kill Your Darlings", "Kill Your Darlings"); //label, value
+		movies.put("12 Years a Slave", "12 Years a Slave");
+		movies.put("The Wolf of Wall Street", "The Wolf of Wall Street");
+		movies.put("All Is Lost", "All Is Lost");
+		movies.put("Robocop", "Robocop");
 		System.out.println("update movies being called");
-		System.out.println(this.date);
+	//	System.out.println(this.date);
 	}
 	public String getSelectedMovie() {
 		return selectedMovie;
@@ -68,6 +79,14 @@ public class UserCriteria {
 		return movies;
 	}
 
+	public void callPrateek(String city) throws NodeNotFound, ResponseException{
+		CinemaDetails check=new CinemaDetails();
+
+
+		this.cinemaList = check.getCinemaDetails("berlin", this.selectedMovie); 
+		                             //(only city name, movieName)
+		
+	}
 	public void setMovies(Map<String, Object> coffee2Value) {
 		this.movies = coffee2Value;
 	}
