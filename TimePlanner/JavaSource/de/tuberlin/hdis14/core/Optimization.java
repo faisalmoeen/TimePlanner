@@ -75,7 +75,7 @@ public class Optimization implements IOptimization {
 				}
 			}
 			
-			if (isMoreOptimal)
+			if (isMoreOptimal || optimalCombinations.size() < maxOptimalCombinations)
 			{
 				optimalCombinations.add(combinationTemp);
 				if(optimalCombinations.size() > maxOptimalCombinations)
