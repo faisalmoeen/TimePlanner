@@ -32,6 +32,16 @@ public class PublicTransport implements IPublicTransport {
 	private static final String OUT_JSON = "/json";
 	private static final String DISTANCE_MATRIX_API_BASE = "http://maps.googleapis.com/maps/api/distancematrix";
 
+	
+	 private static PublicTransport instance = null;
+	
+	 public static PublicTransport getInstance() {
+	      if(instance == null) {
+	         instance = new PublicTransport();
+	      }
+	      return instance;
+	   }
+	
 	    
 	@Override
 	public List<Cinema> callJelena1(String startAddress, String departureTime,List<Cinema> cinemas) {
@@ -150,7 +160,7 @@ public class PublicTransport implements IPublicTransport {
 	@Override
 	public Map<Cinema, Restaurant> callJelena2(List<CinemaRestaurant> cinRest) {
 		
-		Map<Cinema, Restaurant> results;
+		Map<Cinema, Restaurant> results= new HashMap<Cinema,Restaurant>();
 	
 		List<CinemaRestaurantRoute> allCinemasRestaurantsRoutes= new ArrayList<CinemaRestaurantRoute>();
 		
