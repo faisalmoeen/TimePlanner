@@ -69,7 +69,7 @@ public class Optimization implements IOptimization {
 			//TODO was passiert wenn optimalCombinations leer ist?
 			for(OptimalCombination combination : optimalCombinations)
 			{
-				if (combinationTemp.weight < combination.weight) {
+				if (combinationTemp.getWeight() < combination.getWeight()) {
 					isMoreOptimal = true;
 					//TODO break???
 				}
@@ -84,9 +84,9 @@ public class Optimization implements IOptimization {
 					int highestWeight=Integer.MIN_VALUE;
 					for(OptimalCombination combination : optimalCombinations)
 					{
-						if(highestWeight < combination.weight)
+						if(highestWeight < combination.getWeight())
 						{
-							highestWeight = combination.weight;
+							highestWeight = combination.getWeight();
 							foo = combination;
 						}
 					}
@@ -98,7 +98,7 @@ public class Optimization implements IOptimization {
 		Map<Cinema, Restaurant> threeOptimcalCombinations;
 		for(OptimalCombination combination : optimalCombinations)
 		{
-			threeOptimcalCombinations.put(combination.cinema, combination.restaurant);
+			threeOptimcalCombinations.put(combination.getCinema(), combination.getRestaurant());
 			
 		}
 		
