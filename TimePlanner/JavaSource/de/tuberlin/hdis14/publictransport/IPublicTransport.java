@@ -10,6 +10,6 @@ public interface IPublicTransport {
 
 	public List<Cinema> callJelena1(String startAddress, String departureTime,List<Cinema> cinemas);
 	
-	public Map<List<Cinema>, List<Restaurant>> callJelena2(List<CinemaRestaurant> cinRest);
+	public Map<Cinema, Restaurant> callJelena2(List<CinemaRestaurant> cinRest);
 
 }

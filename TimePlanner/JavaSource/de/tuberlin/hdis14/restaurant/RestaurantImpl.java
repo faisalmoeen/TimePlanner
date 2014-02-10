@@ -3,6 +3,8 @@
  */
 package de.tuberlin.hdis14.restaurant;
 
+import de.tuberlin.hdis14.publictransport.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +117,7 @@ public class RestaurantImpl implements IRestaurant {
 	@Override
 	public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
 		
-		List<Cinema> cinemaL = callJelena1(startLocation,startTime,cinemaList);
+		List<Cinema> cinemaL = PublicTransport.getInstance().callJelena1(startLocation,startTime,cinemaList);
 		List<Restaurant> restList =null;
 		
 		CinemaRestaurant cinemaRestList = new CinemaRestaurant();
@@ -127,7 +129,7 @@ public class RestaurantImpl implements IRestaurant {
 			restList=null;
 		}
 		
-		Map<Cinema, Restaurant> optmCinemaRest = callJelena2(cinemaRestList);
+		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(cinemaRestList);
 		
 		return optmCinemaRest;
 	}
