@@ -28,7 +28,7 @@ public class Optimization implements IOptimization {
 	
 	//TODO: Exceptions im Fail Fall
 	@Override
-	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList) {
+	public Map<Cinema, Restaurant> getOptimalCombination(long userStartTime, List<CinemaRestaurantRoute> cinemaRestList) {
 		
 		UserCriteria userCriteria = new UserCriteria();
 		List<OptimalCombination> optimalCombinationsTemp = new ArrayList<OptimalCombination>();
@@ -53,7 +53,8 @@ public class Optimization implements IOptimization {
 			long startTimeFromCinema = cal.getTimeInMillis(); 
 			
 //			long durationOfTrip = cinemaInstance.getCinema().getScreeningTime()[0] - userCriteria.getTime();
-			long durationOfTrip = startTimeFromCinema - startTimeFromUser;
+//			long durationOfTrip = startTimeFromCinema - startTimeFromUser;
+			long durationOfTrip = startTimeFromCinema - userStartTime;
 			long weightedDurationOfTrip = durationOfTrip * weightTripDuration;
 			
 			long weightedWalkingDistance;

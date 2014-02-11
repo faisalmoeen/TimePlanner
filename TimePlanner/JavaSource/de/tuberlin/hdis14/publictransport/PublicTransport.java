@@ -1,6 +1,8 @@
 package de.tuberlin.hdis14.publictransport;
 
 import de.tuberlin.hdis14.cinema.*;
+import de.tuberlin.hdis14.core.IOptimization;
+import de.tuberlin.hdis14.core.Optimization;
 import de.tuberlin.hdis14.restaurant.*;
 
 import java.io.IOException;
@@ -33,7 +35,8 @@ public class PublicTransport implements IPublicTransport {
 	private static final String DISTANCE_MATRIX_API_BASE = "http://maps.googleapis.com/maps/api/distancematrix";
 
 	
-	 private static PublicTransport instance = null;
+	private static PublicTransport instance = null;
+	private long departure;
 	
 	 public static PublicTransport getInstance() {
 	      if(instance == null) {
@@ -51,7 +54,6 @@ public class PublicTransport implements IPublicTransport {
 		 StringBuilder DistanceMatrixResults = new StringBuilder();
 		 URL url;
 		 long screeningTime;
-		 long departure;
 		 //optimum list of cinemas
          List<Cinema> optimumCinemas = new ArrayList<Cinema>();
          Route route=null;
@@ -185,8 +187,8 @@ public class PublicTransport implements IPublicTransport {
 			
 			allCinemasRestaurantsRoutes.add(crr);
 		}
-		
-		results= optimize(allCinemasRestaurantsRoutes);
+		IOptimization optimization = new Optimization();
+		results= optimization.getOptimalCombination(departure, allCinemasRestaurantsRoutes);
 		
 		return results;
 	}

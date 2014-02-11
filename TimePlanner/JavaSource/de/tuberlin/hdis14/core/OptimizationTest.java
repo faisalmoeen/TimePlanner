@@ -146,7 +146,7 @@ public class OptimizationTest {
 	@Test
 	public void testOptimization()
 	{
-		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination(cinemaRestaurantRoutes).entrySet())
+		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination("20:00", cinemaRestaurantRoutes).entrySet())
 		{
 			assertEquals(new HashMap<Cinema, Restaurant>().put(cinema1, restaurant1), instance);
 		}
