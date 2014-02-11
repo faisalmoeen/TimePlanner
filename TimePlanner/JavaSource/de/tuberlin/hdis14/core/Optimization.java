@@ -12,16 +12,13 @@ import java.util.Map.Entry;
 
 import de.tuberlin.hdis14.cinema.Cinema;
 import de.tuberlin.hdis14.publictransport.CinemaRestaurantRoute;
+import de.tuberlin.hdis14.publictransport.PublicTransport;
 import de.tuberlin.hdis14.publictransport.Route;
 import de.tuberlin.hdis14.restaurant.Restaurant;
 import de.tuberlin.hdis14.ui.CalendarBean;
 import de.tuberlin.hdis14.ui.UserCriteria;
 
 public class Optimization implements IOptimization {
-
-//	@SuppressWarnings("deprecation")
-//	Date bufferBeforeCinema = new Date(0, 0, 0, 0, 15, 0);
-	
 	int weightTripDuration = 1;
 	int factorWalkingDistance = 20;
 	int maxOptimalCombinations = 3;
@@ -30,7 +27,8 @@ public class Optimization implements IOptimization {
 	@Override
 	public Map<Cinema, Restaurant> getOptimalCombination(long userStartTime, List<CinemaRestaurantRoute> cinemaRestList) {
 		
-		UserCriteria userCriteria = new UserCriteria();
+//		UserCriteria userCriteria = new UserCriteria();
+		FakeUserCriteria userCriteria = FakeUserCriteria.getInstance();
 		List<OptimalCombination> optimalCombinationsTemp = new ArrayList<OptimalCombination>();
 		
 		for(CinemaRestaurantRoute cinemaInstance: cinemaRestList)
@@ -39,14 +37,14 @@ public class Optimization implements IOptimization {
 			
 			Calendar cal = Calendar.getInstance(); 
 
-            String tm[]=       userCriteria.getTime().split(":");
+//            String tm[]=       userCriteria.getTime().split(":");
 			    
-			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
-			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
-			cal.set(Calendar.SECOND, 0);
-			long startTimeFromUser = cal.getTimeInMillis();
+//			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
+//			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
+//			cal.set(Calendar.SECOND, 0);
+//			long startTimeFromUser = cal.getTimeInMillis();
 			
-			tm = cinemaInstance.getCinema().getScreeningTime()[0].split(":");
+			String tm[] = cinemaInstance.getCinema().getScreeningTime()[0].split(":");
 			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
 			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
 			cal.set(Calendar.SECOND, 0); 

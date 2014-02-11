@@ -39,8 +39,7 @@ public class OptimizationTest {
 
 	OptimalCombination optimalCombination;
 	
-//	UserCriteria userCriteria = new UserCriteria();
-	UserCriteria foo;
+	FakeUserCriteria userCriteria;
 	
 	@Before
 	public  void setUp() throws Exception {
@@ -84,8 +83,8 @@ public class OptimizationTest {
         
         optimalCombination = new OptimalCombination(cinema1, restaurant1, 45, 8);
         
-        foo = new UserCriteria();
-        foo.setTime("18:00");
+        userCriteria = FakeUserCriteria.getInstance();
+        userCriteria.setMaxDistance(500);
 	}
 	
 	@Test
@@ -146,7 +145,8 @@ public class OptimizationTest {
 	@Test
 	public void testOptimization()
 	{
-		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination("20:00", cinemaRestaurantRoutes).entrySet())
+		long startTime = 1392136150296L; // 11.02.2014 17:29
+		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination(startTime, cinemaRestaurantRoutes).entrySet())
 		{
 			assertEquals(new HashMap<Cinema, Restaurant>().put(cinema1, restaurant1), instance);
 		}
