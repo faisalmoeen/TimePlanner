@@ -2,6 +2,7 @@ package de.tuberlin.hdis14.core;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,17 +31,34 @@ public class Optimization implements IOptimization {
 	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList) {
 		
 		UserCriteria userCriteria = new UserCriteria();
-		List<OptimalCombination> optimalCombinationsTemp;
+		List<OptimalCombination> optimalCombinationsTemp = new ArrayList<OptimalCombination>();
 		
 		for(CinemaRestaurantRoute cinemaInstance: cinemaRestList)
 		{
 			//TODO: ist Screening time Start time vom Film
-			int durationOfTrip = cinemaInstance.getCinema().getScreeningTime() - userCriteria.getTime();
-			int weightedDurationOfTrip = durationOfTrip * weightTripDuration;
 			
-			int weightedWalkingDistance;
+			Calendar cal = Calendar.getInstance(); 
+
+            String tm[]=       userCriteria.getTime().split(":");
+			    
+			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
+			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
+			cal.set(Calendar.SECOND, 0);
+			long startTimeFromUser = cal.getTimeInMillis();
+			
+			tm = cinemaInstance.getCinema().getScreeningTime()[0].split(":");
+			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
+			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
+			cal.set(Calendar.SECOND, 0); 
+			long startTimeFromCinema = cal.getTimeInMillis(); 
+			
+//			long durationOfTrip = cinemaInstance.getCinema().getScreeningTime()[0] - userCriteria.getTime();
+			long durationOfTrip = startTimeFromCinema - startTimeFromUser;
+			long weightedDurationOfTrip = durationOfTrip * weightTripDuration;
+			
+			long weightedWalkingDistance;
 			int bar = Integer.MAX_VALUE;
-			Restaurant restaurantTemp;
+			Restaurant restaurantTemp = new Restaurant();
 			for(Entry<Restaurant, Route> restaurantRouteInstance : cinemaInstance.getRestaurantRouteList().entrySet())
 			{
 				int temp = restaurantRouteInstance.getValue().getDistance() / userCriteria.getMaxDistance();
@@ -62,7 +80,7 @@ public class Optimization implements IOptimization {
 			}
 		}
 		
-		List<OptimalCombination> optimalCombinations;
+		List<OptimalCombination> optimalCombinations = new ArrayList<OptimalCombination>();
 		for(OptimalCombination combinationTemp : optimalCombinationsTemp)
 		{
 			boolean isMoreOptimal = false;
@@ -80,8 +98,8 @@ public class Optimization implements IOptimization {
 				optimalCombinations.add(combinationTemp);
 				if(optimalCombinations.size() > maxOptimalCombinations)
 				{
-					OptimalCombination foo;
-					int highestWeight=Integer.MIN_VALUE;
+					OptimalCombination foo = null;
+					long highestWeight=Integer.MIN_VALUE;
 					for(OptimalCombination combination : optimalCombinations)
 					{
 						if(highestWeight < combination.getWeight())
@@ -95,7 +113,7 @@ public class Optimization implements IOptimization {
 			}
 		}
 		
-		Map<Cinema, Restaurant> threeOptimcalCombinations;
+		Map<Cinema, Restaurant> threeOptimcalCombinations = new HashMap<Cinema, Restaurant>();
 		for(OptimalCombination combination : optimalCombinations)
 		{
 			threeOptimcalCombinations.put(combination.getCinema(), combination.getRestaurant());

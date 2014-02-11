@@ -7,11 +7,11 @@ import de.tuberlin.hdis14.publictransport.CinemaRestaurantRoute;
 import de.tuberlin.hdis14.restaurant.Restaurant;
 
 public class OptimalCombination  {
-	private int weight = Integer.MAX_VALUE;
+	private long weight = Integer.MAX_VALUE;
 	private Cinema cinema;
 	private Restaurant restaurant;
 	
-	public OptimalCombination(Cinema cinema ,Restaurant restaurant , int weightedTripDuration, int factorWalkingDistance) {
+	public OptimalCombination(Cinema cinema ,Restaurant restaurant , long weightedTripDuration, long factorWalkingDistance) {
 		this.setCinema(cinema);
 		this.setRestaurant(restaurant);
 		this.setWeight(weightedTripDuration + factorWalkingDistance);
@@ -33,11 +33,11 @@ public class OptimalCombination  {
 		this.restaurant = restaurant;
 	}
 
-	public int getWeight() {
+	public long getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(long weight) {
 		this.weight = weight;
 	}
 }
