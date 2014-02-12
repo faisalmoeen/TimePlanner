@@ -11,10 +11,10 @@ public class OptimalCombination  {
 	private Cinema cinema;
 	private Restaurant restaurant;
 	
-	public OptimalCombination(Cinema cinema ,Restaurant restaurant , long weightedTripDuration, long factorWalkingDistance) {
+	public OptimalCombination(Cinema cinema ,Restaurant restaurant , long weightedTripDuration, long weightedWalkingDistance) {
 		this.setCinema(cinema);
 		this.setRestaurant(restaurant);
-		this.setWeight(weightedTripDuration + factorWalkingDistance);
+		this.setWeight(weightedTripDuration + weightedWalkingDistance);
 	}
 
 	public Cinema getCinema() {

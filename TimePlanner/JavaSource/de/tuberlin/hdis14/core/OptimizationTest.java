@@ -5,6 +5,7 @@ import static org.junit.Assert.assertArrayEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -84,6 +85,7 @@ public class OptimizationTest {
         optimalCombination = new OptimalCombination(cinema1, restaurant1, 45, 8);
         
         userCriteria = FakeUserCriteria.getInstance();
+        userCriteria.setTime("20:00");
         userCriteria.setMaxDistance(500);
 	}
 	
@@ -146,9 +148,19 @@ public class OptimizationTest {
 	public void testOptimization()
 	{
 		long startTime = 1392136150296L; // 11.02.2014 17:29
-		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination(startTime, cinemaRestaurantRoutes).entrySet())
+		
+		Iterator<Entry<Cinema, Restaurant>> instance = optimization.getOptimalCombination(cinemaRestaurantRoutes). entrySet().iterator();
+//		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination(cinemaRestaurantRoutes). entrySet().iterator())
+		while(instance.hasNext())
 		{
-			assertEquals(new HashMap<Cinema, Restaurant>().put(cinema1, restaurant1), instance);
+//			Cinema cinemaTest = instance.;
+//			assertEquals(cinema1, cinemaTest);
+//			Restaurant restaurantTest = instance.getValue();
+//			assertEquals(restaurant1, restaurantTest);
+			instance.toString();
+			Map<Cinema, Restaurant> expected = new HashMap<Cinema, Restaurant>();
+			expected.put(cinema1, restaurant1);
+			assertEquals(expected, instance);
 		}
 	}
 	
