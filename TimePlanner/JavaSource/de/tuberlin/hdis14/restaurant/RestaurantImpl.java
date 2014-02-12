@@ -235,7 +235,7 @@ public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime
 			
 			ArrayList<String> addressList = p.getLocation()
 					.getDisplay_address();
-			System.out.println(addressList.size());
+		//	System.out.println(addressList.size());
 			String address = "";
 			int count = addressList.size();
 			for (String addr : addressList) {
