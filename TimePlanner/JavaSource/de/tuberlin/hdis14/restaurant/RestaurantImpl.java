@@ -3,8 +3,6 @@
  */
 package de.tuberlin.hdis14.restaurant;
 
-import de.tuberlin.hdis14.publictransport.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.tuberlin.hdis14.cinema.Cinema;
+import de.tuberlin.hdis14.publictransport.PublicTransport;
 
 /**
  * @author JANANI
@@ -57,6 +56,15 @@ public class RestaurantImpl implements IRestaurant {
 				.apiKey(consumerKey).apiSecret(consumerSecret).build();
 		this.accessToken = new Token(token, tokenSecret);
 	}
+	
+	private static RestaurantImpl instance = null;
+	
+	 public static RestaurantImpl getInstance() {
+	      if(instance == null) {
+	         instance = new RestaurantImpl();
+	      }
+	      return instance;
+	   }
 
 	/**
 	 * Search with term and location.
@@ -117,6 +125,8 @@ public class RestaurantImpl implements IRestaurant {
 	@Override
 	public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
 		
+		
+		List<CinemaRestaurant> listCinemaRest = new ArrayList<CinemaRestaurant>();
 		List<Cinema> cinemaL = PublicTransport.getInstance().callJelena1(startLocation,startTime,cinemaList);
 		List<Restaurant> restList =null;
 		
@@ -126,10 +136,10 @@ public class RestaurantImpl implements IRestaurant {
 			restList = getRestaurants(c, cuisine, type,maxDistance);
 			cinemaRestList.setCinema(c);
 			cinemaRestList.setRestaurantList(restList);
-			restList=null;
+			listCinemaRest.add(cinemaRestList);
 		}
 		
-		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(cinemaRestList);
+		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest);
 		
 		return optmCinemaRest;
 	}

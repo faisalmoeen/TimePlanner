@@ -228,7 +228,7 @@ public class UserCriteria {
 		System.out.println(this.type);
 		System.out.println(this.maxDistance);
 		String startLocation = this.houseNumber+","+this.streetAddress+","+this.zipCode;
-		IRestaurant refRestaurant = new RestaurantImpl();
+		IRestaurant refRestaurant = RestaurantImpl.getInstance();
 		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
 		this.selectedMap=mapReturned;
 		
