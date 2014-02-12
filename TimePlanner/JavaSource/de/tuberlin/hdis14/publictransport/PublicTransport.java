@@ -177,22 +177,25 @@ public class PublicTransport implements IPublicTransport {
 
 		Map<Cinema, Restaurant> results = new HashMap<Cinema, Restaurant>();
 		
-				List<CinemaRestaurantRoute> allCinemasRestaurantsRoutes = new ArrayList<CinemaRestaurantRoute>();
+		List<CinemaRestaurantRoute> allCinemasRestaurantsRoutes = new ArrayList<CinemaRestaurantRoute>();
 
 		for (int i = 0; i < cinRest.size(); i++) {
 			Cinema cinema = (cinRest.get(i)).getCinema();
 			CinemaRestaurantRoute crr = new CinemaRestaurantRoute(cinema);
-			List<Restaurant> restaurants = (cinRest.get(i)).getRestaurantList();
-			
-			for (int j = 0; j < restaurants.size(); j++) {
-				Route route = calculateRoute(cinema.getAddress(),
-						(restaurants.get(j)).getRestaurantAddress(), "walking");
-
-				crr.getRestaurantRouteList().put(restaurants.get(j), route);
-
+			if ((cinRest.get(i)).getRestaurantList() != null )
+			{
+				List<Restaurant> restaurants = (cinRest.get(i)).getRestaurantList();
+				
+				for (int j = 0; j < restaurants.size(); j++) {
+					Route route = calculateRoute(cinema.getAddress(),
+							(restaurants.get(j)).getRestaurantAddress(), "walking");
+	
+					crr.getRestaurantRouteList().put(restaurants.get(j), route);
+	
+				}
+	
+				allCinemasRestaurantsRoutes.add(crr);
 			}
-
-			allCinemasRestaurantsRoutes.add(crr);
 		}
 		IOptimization optimization = new Optimization();
 		
