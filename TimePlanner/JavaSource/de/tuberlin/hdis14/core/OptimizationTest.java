@@ -145,7 +145,7 @@ public class OptimizationTest {
 	{
 		long startTime = 1392136150296L; // 11.02.2014 17:29
 		
-		Iterator<Entry<Cinema, Restaurant>> instance = optimization.getOptimalCombination(cinemaRestaurantRoutes). entrySet().iterator();
+		Iterator<Entry<Cinema, Restaurant>> instance = optimization.getOptimalCombination(cinemaRestaurantRoutes, 10). entrySet().iterator();
 //		for(Entry<Cinema, Restaurant> instance: optimization.getOptimalCombination(cinemaRestaurantRoutes). entrySet().iterator())
 		while(instance.hasNext())
 		{

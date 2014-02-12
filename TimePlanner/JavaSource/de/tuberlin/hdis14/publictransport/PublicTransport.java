@@ -173,7 +173,7 @@ public class PublicTransport implements IPublicTransport {
 	// core group will call this method to calculate optimal restaurants for
 	// each cinema based on route details (duration,...)
 	@Override
-	public Map<Cinema, Restaurant> callJelena2(List<CinemaRestaurant> cinRest) {
+	public Map<Cinema, Restaurant> callJelena2(List<CinemaRestaurant> cinRest, int maxDistance) {
 
 		Map<Cinema, Restaurant> results = new HashMap<Cinema, Restaurant>();
 		
@@ -196,7 +196,7 @@ public class PublicTransport implements IPublicTransport {
 		}
 		IOptimization optimization = new Optimization();
 		
-		results = optimization.getOptimalCombination(allCinemasRestaurantsRoutes);
+		results = optimization.getOptimalCombination(allCinemasRestaurantsRoutes, maxDistance);
 
 		
 		
@@ -468,7 +468,7 @@ public class PublicTransport implements IPublicTransport {
 		 List<CinemaRestaurant> listcinrest= new ArrayList<CinemaRestaurant>();
 		 listcinrest.add(cr);
 		 
-		 Map<Cinema, Restaurant> cinrest= pt.callJelena2(listcinrest);	
+		 Map<Cinema, Restaurant> cinrest= pt.callJelena2(listcinrest, 10);	
 		 
 		 for (Map.Entry entry : cinrest.entrySet()) {
 			 

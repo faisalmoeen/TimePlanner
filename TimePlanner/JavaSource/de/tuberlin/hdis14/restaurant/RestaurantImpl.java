@@ -139,7 +139,7 @@ public class RestaurantImpl implements IRestaurant {
 			listCinemaRest.add(cinemaRestList);
 		}
 		
-		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest);
+		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest,maxDistance);
 		
 		return optmCinemaRest;
 	}

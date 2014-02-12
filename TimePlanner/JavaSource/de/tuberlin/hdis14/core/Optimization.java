@@ -23,7 +23,7 @@ public class Optimization implements IOptimization {
 	
 	//TODO: Exceptions im Fail Fall
 	@Override
-	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList) {
+	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList, int maxDistance) {
 		optimalCombinationsTemp = new ArrayList<OptimalCombination>();
 		getOptimalCombinationTemp(cinemaRestList);
 		

@@ -79,7 +79,7 @@ public class UserCriteria {
 		return movies;
 	}
 
-	public void callPrateek(String city) throws NodeNotFound, ResponseException{
+	public void callPrateek() throws NodeNotFound, ResponseException{
 		CinemaDetails check=new CinemaDetails();
 
 
@@ -229,6 +229,15 @@ public class UserCriteria {
 		System.out.println(this.maxDistance);
 		String startLocation = this.houseNumber+","+this.streetAddress+","+this.zipCode;
 		IRestaurant refRestaurant = RestaurantImpl.getInstance();
+		try {
+			callPrateek();
+		} catch (NodeNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ResponseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
 		this.selectedMap=mapReturned;
 		
