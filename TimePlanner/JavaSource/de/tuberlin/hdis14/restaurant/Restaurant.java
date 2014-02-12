@@ -58,11 +58,14 @@ public class Restaurant extends HashMap<String, String> implements Serializable 
 
 
 	public Restaurant(String address){
-		
+		super();
 		restaurantAddress=address;
 	}
 	
-	
+	public Restaurant()
+	{
+		super();
+	}
 }
 
 

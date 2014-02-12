@@ -31,6 +31,9 @@ public class CinemaRestaurant implements Serializable {
 		this.restaurantList = restaurantList;
 	}
 	
-	
+	public CinemaRestaurant()
+	{
+		
+	}
 
 }
