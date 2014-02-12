@@ -416,7 +416,7 @@ public class PublicTransport implements IPublicTransport {
 		return unixtime;
 	}
 
-	// for testing...............................
+	/*for testing...............................
 
 	public static void main(String[] args) {
 
@@ -440,12 +440,12 @@ public class PublicTransport implements IPublicTransport {
 		String[] t1 = { "22:00", "23:00" };
 		Cinema c2 = new Cinema("Fay", t1,"Friedrichstrasse 120,Berlin,DE", temp2);
 		endLoc.add(c2);
-*/
+
 		PublicTransport pt = new PublicTransport();
 
 		//rts = pt.callJelena1(startAddre, "18:30", endLoc);
 
-	/*	for (int i = 0; i < rts.size(); i++) {
+		for (int i = 0; i < rts.size(); i++) {
 
 			System.out.println("Optimized cinemas.........\t" +i+"\n");
 			System.out.println("********************");
@@ -453,7 +453,7 @@ public class PublicTransport implements IPublicTransport {
 			System.out.println("address"  + (rts.get(i)).getAddress());
 			System.out.println("address" + (rts.get(i)).getScreeningTime());
 			
-		}*/
+		}
 		
 		Restaurant r= new Restaurant("Friedrichstrasse 120,Berlin,DE");
 
@@ -480,7 +480,7 @@ public class PublicTransport implements IPublicTransport {
 
 	}
 	
-	
+	*/
 
 	// ..........................................
 }

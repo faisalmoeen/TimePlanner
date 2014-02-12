@@ -98,13 +98,16 @@ function getLocationData(addresses, callback) {
 	}
 }
 
-function calcRoute() {
+function calcRoute(startAdd, cinemaAdd, restaurantAdd) {
 	//alert("calculate route");
 	var addresses = new Array();
-	addresses[0] = "Mollwitzstraße 3, Berlin";
-	addresses[1] = "Goltzstraße 20, Berlin";
-	addresses[2] = "Goltzstraße 150, Berlin";
+	//addresses[0] = "Mollwitzstraße 3, Berlin";
+	///addresses[1] = "Goltzstraße 20, Berlin";
+	//addresses[2] = "Goltzstraße 150, Berlin";
 
+	addresses[0] = startAdd;
+	addresses[1] = cinemaAdd;
+	addresses[2] = restaurantAdd;
 	getLocationData(addresses, function(coords) {
 
 		drawMarker(coords[0], map, addresses[0], '1');
