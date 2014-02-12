@@ -77,69 +77,104 @@ public class RestaurantImpl implements IRestaurant {
 	 *            Longitude
 	 * @return JSON string response
 	 */
-	public String search(String type,String term, String radius, String location) {
-		OAuthRequest request = new OAuthRequest(Verb.GET,
-				"http://api.yelp.com/v2/search");
+	 public String search(String type,String term, String radius, String location) {
+			OAuthRequest request = new OAuthRequest(Verb.GET,
+					"http://api.yelp.com/v2/search");
 
-		String cuisineType="restaurants";
-			if(type.equalsIgnoreCase("Bar")) {
-				cuisineType ="bars";
-			} else if(type.equalsIgnoreCase("Cafe")){
-				cuisineType ="cafes";
-			}
-		    //request.addQuerystringParameter("term", term);
-			String cuisine="german";
-			if(term.equalsIgnoreCase("Chinese")){
-				cuisine="chinese";
+			String cuisineType="restaurants";
+				if(type.equalsIgnoreCase("Bar")) {
+					cuisineType ="bars";
+				} else if(type.equalsIgnoreCase("Cafe")){
+					cuisineType ="cafes";
+				}
+			    //request.addQuerystringParameter("term", term);
+				String cuisine="german";
+				if(term.equalsIgnoreCase("Chinese")){
+					cuisine="chinese";
+					
+				}else if(term.equalsIgnoreCase("Japanese")){
+					cuisine="japanese";
+				}else if(term.equalsIgnoreCase("Italian")){
+					cuisine="italian";
+				}else if(term.equalsIgnoreCase("Indisch")){
+					cuisine="indpak";
+				}else if(term.equalsIgnoreCase("German")){
+					cuisine="german";
+				}else if(term.equalsIgnoreCase("French")){
+					cuisine="french";
+				}else if(term.equalsIgnoreCase("Cocktail")){
+					cuisine="cocktail";
+				}
 				
-			}else if(term.equalsIgnoreCase("Japanese")){
-				cuisine="japanese";
-			}else if(term.equalsIgnoreCase("Italian")){
-				cuisine="italian";
-			}else if(term.equalsIgnoreCase("Indisch")){
-				cuisine="indpak";
-			}else if(term.equalsIgnoreCase("German")){
-				cuisine="german";
-			}else if(term.equalsIgnoreCase("French")){
-				cuisine="french";
-			}else if(term.equalsIgnoreCase("Cocktail")){
-				cuisine="cocktail";
-			}
+				if(!radius.equals("0")){
+					 request.addQuerystringParameter("radius_filter", radius);
+				}else{
+					radius = "1000";
+					request.addQuerystringParameter("radius_filter", radius);
+				}
+			   if(cuisineType.equalsIgnoreCase("cafes")){
+				   request.addQuerystringParameter("term", cuisineType);  
+			   }else{
+				   request.addQuerystringParameter("term", cuisine+"+"+cuisineType);
+			   }
+			   String[] locs = location.split(" ");
+			   
+			   if(locs[0]!=null){
+				request.addQuerystringParameter("location", locs[0]+" Berlin");
+			   }else{
+				   request.addQuerystringParameter("location", "Berlin");
+			   }
 			
-			if(!radius.equals("")){
-				 request.addQuerystringParameter("radius_filter", radius);
-			}
-		   if(cuisineType.equalsIgnoreCase("cafes")){
-			   request.addQuerystringParameter("term", cuisineType);  
-		   }else{
-			   request.addQuerystringParameter("term", cuisine+"+"+cuisineType);
-		   }
-			
-			request.addQuerystringParameter("location", location);
-		
-		System.out.println(request.getQueryStringParams());
-		this.service.signRequest(this.accessToken, request);
-		Response response = request.send();
-		return response.getBody();
-	}
+			System.out.println(request.getQueryStringParams());
+			this.service.signRequest(this.accessToken, request);
+			Response response = request.send();
+			return response.getBody();
+		}
 	@Override
-	public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
+public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime, List<Cinema> cinemaList,String cuisine, String type, int maxDistance){
 		
 		
 		List<CinemaRestaurant> listCinemaRest = new ArrayList<CinemaRestaurant>();
 		List<Cinema> cinemaL = PublicTransport.getInstance().callJelena1(startLocation,startTime,cinemaList);
 		List<Restaurant> restList =null;
-		
+		String cuisine_match = "Restaurant";
+		String cuisine_type = "Chinese";
 		CinemaRestaurant cinemaRestList = new CinemaRestaurant();
 		
+		if(cuisine.equalsIgnoreCase("1"))
+			cuisine_match="Chinese";
+		else if(cuisine.equalsIgnoreCase("2"))
+			cuisine_match="Japanese";
+		else if(cuisine.equalsIgnoreCase("3"))
+			cuisine_match="Italian";
+		else if(cuisine.equalsIgnoreCase("4"))
+			cuisine_match="Indisch";
+		else if(cuisine.equalsIgnoreCase("5"))
+			cuisine_match="German";
+		else if(cuisine.equalsIgnoreCase("6"))
+			cuisine_match="French";
+		else if(cuisine.equalsIgnoreCase("7"))
+			cuisine_match="Cocktail";
+				
+			
+		if(type.equalsIgnoreCase("10"))
+			cuisine_type="Restaurant";
+		else if(type.equalsIgnoreCase("11"))
+			cuisine_type="Bar";
+		else if(type.equalsIgnoreCase("12"))
+			cuisine_type="Cafe";
+			
+	
+		
+		
 		for(Cinema c : cinemaL){
-			restList = getRestaurants(c, cuisine, type,maxDistance);
+			restList = getRestaurants(c, cuisine_match, cuisine_type,maxDistance);
 			cinemaRestList.setCinema(c);
 			cinemaRestList.setRestaurantList(restList);
 			listCinemaRest.add(cinemaRestList);
 		}
 		
-		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest,maxDistance);
+		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest, maxDistance);
 		
 		return optmCinemaRest;
 	}
