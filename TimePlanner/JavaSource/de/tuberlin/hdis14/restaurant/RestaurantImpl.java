@@ -5,6 +5,7 @@ package de.tuberlin.hdis14.restaurant;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -170,7 +171,10 @@ public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime
 		for(Cinema c : cinemaL){
 			restList = getRestaurants(c, cuisine_match, cuisine_type,maxDistance);
 			cinemaRestList.setCinema(c);
+			//System.out.println("restaurant result for "+c.getTheaterName()+"-->"+restList);
+			if(restList.size()!=0){
 			cinemaRestList.setRestaurantList(restList);
+			}
 			listCinemaRest.add(cinemaRestList);
 		}
 		
@@ -226,6 +230,8 @@ public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime
 		ArrayList<Business> projects = projs.get("businesses");
 
 		List<Restaurant> restaurantList = new ArrayList<Restaurant>();
+		//System.out.println("business--"+projects);
+		if(projects.size()!=0){	
 		for (Business p : projects) {
 
 			Restaurant restaurant = new Restaurant();
@@ -250,7 +256,9 @@ public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime
 			restaurantList.add(restaurant);
 
 		}
-
+	}
+		
+		
 		return restaurantList;
 	}
 
