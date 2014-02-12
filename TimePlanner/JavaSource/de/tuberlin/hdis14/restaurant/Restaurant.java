@@ -20,6 +20,8 @@ public class Restaurant extends HashMap<String, String> implements Serializable 
 	
 	
 	private String name;
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -54,7 +56,11 @@ public class Restaurant extends HashMap<String, String> implements Serializable 
 	private String phone;
 
 
-	
+
+	public Restaurant(String address){
+		
+		restaurantAddress=address;
+	}
 	
 	
 }

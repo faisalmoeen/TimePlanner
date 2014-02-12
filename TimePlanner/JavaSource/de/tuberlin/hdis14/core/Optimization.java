@@ -103,8 +103,10 @@ public class Optimization implements IOptimization {
 			//TODO: ist Screening time Start time vom Film
 			
 			Calendar cal = Calendar.getInstance(); 
-
-            String tm[]=       userCriteria.getTime().split(":");
+			userCriteria.setTime("20:30");
+			userCriteria.setMaxDistance(50);
+			
+            String tm[]=  userCriteria.getTime().split(":");
 			    
 			cal.set(Calendar.HOUR, Integer.parseInt(tm[0])); 
 			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1])); 
@@ -123,7 +125,7 @@ public class Optimization implements IOptimization {
 			
 			long weightedWalkingDistance;
 			int bar = Integer.MAX_VALUE;
-			Restaurant restaurantTemp = new Restaurant();
+			//Restaurant restaurantTemp = new Restaurant("sth...............................");
 			for(Entry<Restaurant, Route> restaurantRouteInstance : cinemaInstance.getRestaurantRouteList().entrySet())
 			{
 				int temp = restaurantRouteInstance.getValue().getDistance() / userCriteria.getMaxDistance();
@@ -139,7 +141,7 @@ public class Optimization implements IOptimization {
 				
 				optimalCombinationsTemp.add(new OptimalCombination(
 						cinemaInstance.getCinema(),
-						restaurantTemp,
+						(Restaurant)restaurantRouteInstance.getKey(),
 						weightedDurationOfTrip, 
 						weightedWalkingDistance));
 			}

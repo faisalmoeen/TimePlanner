@@ -25,5 +25,12 @@ public class CinemaRestaurant implements Serializable {
 	public void setRestaurantList(List<Restaurant> restaurantList) {
 		this.restaurantList = restaurantList;
 	}
+	public CinemaRestaurant(Cinema cinema, List<Restaurant> restaurantList) {
+		
+		this.cinema = cinema;
+		this.restaurantList = restaurantList;
+	}
+	
+	
 
 }

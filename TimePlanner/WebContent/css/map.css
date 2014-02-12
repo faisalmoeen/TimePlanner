@@ -1,0 +1,65 @@
+html,body,
+#map-container {
+  height: 90%;
+  width:100%;
+  clear:none;
+}
+#map {
+  height: 70%;
+  width: 45%;
+  float:right;
+  margin-right: 3%;
+  padding: 0px;
+  margin-left:2%;
+}
+#directions {
+  height: 100%;
+  width: 50%;
+  float:left;
+}
+#directions1{
+  height: 50%;
+  width: 100%;
+  float:left;
+}
+#directions2{
+  height: 50%;
+  width: 100%;
+  float:left;
+  margin-top:3%;
+}   
+#map-canvas {
+  height:100%;
+  width:100%;
+}
+#directions-panel {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
+#directions-info1 {
+  height: 10%;
+  float: left;
+  width: 95%;
+  color:rgba(255,0,0,1);
+}
+#directions-panel1 {
+  height: 90%;
+  float: left;
+  width: 100%;
+  overflow: auto;  
+}
+#directions-info2 {
+  height: 10%;
+  float: left;
+  width: 95%;
+  color:rgba(255,0,0,1);
+}
+
+#directions-panel2 {
+  height: 90%;
+  float: left;
+  width: 100%;
+  overflow: auto;    
+}
+
