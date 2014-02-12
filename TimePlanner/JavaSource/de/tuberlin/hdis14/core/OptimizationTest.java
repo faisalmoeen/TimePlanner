@@ -1,7 +1,6 @@
 package de.tuberlin.hdis14.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.tuberlin.hdis14.cinema.Cinema;
-import de.tuberlin.hdis14.core.OptimalCombination;
-import de.tuberlin.hdis14.core.Optimization;
 import de.tuberlin.hdis14.publictransport.CinemaRestaurantRoute;
 import de.tuberlin.hdis14.publictransport.Route;
 import de.tuberlin.hdis14.restaurant.Restaurant;
-import de.tuberlin.hdis14.ui.UserCriteria;
 
 public class OptimizationTest {
 	private Restaurant restaurant1;
@@ -48,7 +44,7 @@ public class OptimizationTest {
         restaurant1.setName("DaVinci");
         restaurant1.setPhone("0176473844");
         restaurant1.setRating("miserable");
-        restaurant1.setRestaurantAddress("Berliner Straße 112");
+        restaurant1.setRestaurantAddress("Berliner Straï¿½e 112");
         
         restaurant2 = new Restaurant();
         restaurant2.setName("HiHo");
@@ -56,8 +52,8 @@ public class OptimizationTest {
         restaurant2.setRating("very good");
         restaurant2.setRestaurantAddress("ThePlatz 12");
 
-        route1 = new Route(2147483647,16129,8,2, "Straße des 17. Juni 135", "Berliner Straße 13" );
-        route2 = new Route(2147483285, 16061, 15, 5, "Alexanderstraße 1", "Heerstraße 35" );
+        route1 = new Route(2147483647,16129,8,2, "Straï¿½e des 17. Juni 135", "Berliner Straï¿½e 13" );
+        route2 = new Route(2147483285, 16061, 15, 5, "Alexanderstraï¿½e 1", "Heerstraï¿½e 35" );
         
         String[] startTimes1 = {"19:00","20:00"}; 
         String[] startTimes2 = {"20:15","22:35"}; 
@@ -65,8 +61,8 @@ public class OptimizationTest {
         int[] movieDuration1 = {120,155}; //String[] endTimes1 = {"21:00","22:00"};  
         int[] movieDurations2 = {90,137}; //String[] endTimes2 = {"22:15","00:35"}; 
         
-        cinema1 = new Cinema("Zoo Palast", startTimes1 , "Berliner Straße 13", movieDuration1); //("Berliner Straße 13", "19:00", "HalluGalle", route1 );
-        cinema2 = new Cinema("Cubix Alexanderplatz", startTimes2, "Heerstraße 35", movieDurations2);//"Heerstraße 35", "21:15", "All is Lost", route2 );
+        cinema1 = new Cinema("Zoo Palast", startTimes1 , "Berliner Straï¿½e 13", movieDuration1); //("Berliner Straï¿½e 13", "19:00", "HalluGalle", route1 );
+        cinema2 = new Cinema("Cubix Alexanderplatz", startTimes2, "Heerstraï¿½e 35", movieDurations2);//"Heerstraï¿½e 35", "21:15", "All is Lost", route2 );
         
         cinemaRestaurantRoute1 = new CinemaRestaurantRoute(cinema1);
         Map<Restaurant, Route> restaurantRoute1 = new HashMap<Restaurant, Route>();
@@ -84,9 +80,9 @@ public class OptimizationTest {
         
         optimalCombination = new OptimalCombination(cinema1, restaurant1, 45, 8);
         
-        userCriteria = FakeUserCriteria.getInstance();
-        userCriteria.setTime("20:00");
-        userCriteria.setMaxDistance(500);
+//        userCriteria = FakeUserCriteria.getInstance();
+//        userCriteria.setTime("20:00");
+//        userCriteria.setMaxDistance(500);
 	}
 	
 	@Test
@@ -95,14 +91,14 @@ public class OptimizationTest {
 		assertEquals("DaVinci", restaurant1.getName());
 		assertEquals("0176473844", restaurant1.getPhone());
 		assertEquals("miserable", restaurant1.getRating());
-		assertEquals("Berliner Straße 112", restaurant1.getRestaurantAddress());
+		assertEquals("Berliner Straï¿½e 112", restaurant1.getRestaurantAddress());
 	}
 	
 	@Test
     public void testCinema ()
 	{
 		assertEquals("Zoo Palast", cinema1.getTheaterName());
-		assertEquals("Berliner Straße 13", cinema1.getAddress());
+		assertEquals("Berliner Straï¿½e 13", cinema1.getAddress());
 //		assertArrayEquals(new String[]{"19:00", "20:00"}, cinema1.getScreeningTime());
 		
 		assertEquals("19:00", cinema1.getScreeningTime()[0]);
@@ -114,7 +110,7 @@ public class OptimizationTest {
 
 		
 		assertEquals("Cubix Alexanderplatz", cinema2.getTheaterName());
-		assertEquals("Heerstraße 35", cinema2.getAddress());
+		assertEquals("Heerstraï¿½e 35", cinema2.getAddress());
 		
 //		assertArrayEquals(new String[]{"20:15", "22:35"}, cinema2.getScreeningTime());
 		assertEquals("20:15", cinema2.getScreeningTime()[0]);
@@ -132,8 +128,8 @@ public class OptimizationTest {
 		assertEquals(16129, route1.getDeparture_time());
 		assertEquals(8, route1.getDuration());
 		assertEquals(2, route1.getDistance());
-		assertEquals("Straße des 17. Juni 135", route1.getStart_address());
-		assertEquals("Berliner Straße 13", route1.getEnd_address());
+		assertEquals("Straï¿½e des 17. Juni 135", route1.getStart_address());
+		assertEquals("Berliner Straï¿½e 13", route1.getEnd_address());
 	}
 	
 	@Test
