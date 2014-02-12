@@ -2,11 +2,18 @@
 var map;
 var directionsDisplay1, directionsDisplay2;
 var markersArray = [];
-var infowindow;
+var infowindow = new google.maps.InfoWindow();;
 var directionsService;
 var geocoder;
 
-function drawMarker(point, map, title, text) {
+function drawMarker(point, map, title, text,address) {
+	
+	var contentString = '<div style="width:150px;height:70px" id="bubble">'
+		+ '<b>'+title+'</b>'
+		+ '<div id="fay">' + '<p>Address: '+address+'</p>'
+		+ '</div>' 
+		+ '</div>';
+	
 	var marker = new google.maps.Marker({
 		position : point,
 		map : map,
@@ -14,18 +21,17 @@ function drawMarker(point, map, title, text) {
 		icon : 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='
 				+ text + '|FE6256|000000'
 	});
-	visible: true;
-
-	var contentString = '<div style="width:120px;height:60px" id="bubble">'
-			+ '<b>Restaurant</b>'
-			+ '<div id="fay">' + '<p>dadadadadada</p>'
-			+ '</div>' 
-			+ '</div>';
-
+	//visible: true;
 	//if there is another open InfowWindow, close it.
 	if (infowindow)
 		infowindow.close();
-	addInfoWindow(marker, contentString);
+	google.maps.event.addListener(marker, 'click', function() {
+	    infowindow.setContent(contentString);
+	    infowindow.open(map,marker);
+
+	 });
+
+	//addInfoWindow(marker, contentString);
 	//add marker to the Marker's array
 	markersArray.push(marker);
 }
@@ -98,7 +104,7 @@ function getLocationData(addresses, callback) {
 	}
 }
 
-function calcRoute(startAdd, cinemaAdd, restaurantAdd) {
+function calcRoute(startAdd, cinemaAdd, restaurantAdd, cinemaName, RestaurantName) {
 	//alert("calculate route");
 	var addresses = new Array();
 	//addresses[0] = "Mollwitzstraße 3, Berlin";
@@ -110,9 +116,9 @@ function calcRoute(startAdd, cinemaAdd, restaurantAdd) {
 	addresses[2] = restaurantAdd;
 	getLocationData(addresses, function(coords) {
 
-		drawMarker(coords[0], map, addresses[0], '1');
-		drawMarker(coords[1], map, addresses[1], '2');
-		drawMarker(coords[2], map, addresses[2], '3');
+		drawMarker(coords[0], map, addresses[0], '1', startAdd);
+		drawMarker(coords[1], map, cinemaName, '2', cinemaAdd);
+		drawMarker(coords[2], map, RestaurantName, '3', restaurantAdd);
 
 		var request1 = {
 			origin : addresses[0],
