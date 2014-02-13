@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import com.jaunt.NodeNotFound;
@@ -33,11 +35,11 @@ public class UserCriteria {
 	private Date date;
 	private String time;
 	private String name="Faisal";
-	private String type;
-	private String cuisine;
+	private String type="10";
+	private String cuisine="1";
 	private int maxDistance;
 	private Map<String,Object> movies;
-	private String selectedMovie;
+	private String selectedMovie="Kill Your Darlings";
     private	String durationInfo;
 
 
@@ -63,6 +65,7 @@ public class UserCriteria {
 		movies.put("The Wolf of Wall Street", "The Wolf of Wall Street");
 		movies.put("All Is Lost", "All Is Lost");
 		movies.put("Robocop", "Robocop");
+		this.setSelectedMovie("Kill Your Darlings");
 		System.out.println("update movies being called");
 	//	System.out.println(this.date);
 	}
@@ -223,10 +226,17 @@ public class UserCriteria {
 	
 	public void callJanani()
 	{
+		FacesContext.getCurrentInstance().getAttributes().put("maxDistance", getMaxDistance());
+		FacesContext.getCurrentInstance().getAttributes().put("departureTime", getTime());
+		System.out.println("Faces: " +FacesContext.getCurrentInstance().getAttributes().get("maxDistance"));
+		System.out.println("Faces: "+FacesContext.getCurrentInstance().getAttributes().get("departureTime"));
 		System.out.println("janani method called");
 		System.out.println(this.cuisine);
 		System.out.println(this.type);
 		System.out.println(this.maxDistance);
+		if(!validateInputs()){
+			return;
+		}
 		String startLocation = this.houseNumber+","+this.streetAddress+","+this.zipCode;
 		IRestaurant refRestaurant = RestaurantImpl.getInstance();
 		try {
@@ -269,5 +279,53 @@ public class UserCriteria {
 	   
 	}
 	
+	private boolean validateInputs()
+	{
+		System.out.println("------Error Check-----");
+		System.out.println(this.getCuisine());//null
+		System.out.println(this.getHouseNumber());
+		if(this.getHouseNumber()==null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("House No. Can't be empty"));
+			return false;
+		}
+		if(this.getMaxDistance()==0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Max distance can't be zero"));
+			return false;
+		}
+		System.out.println(this.getMaxDistance());
+		System.out.println(this.getPersons());
+		if(this.getPersons()==0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Person count can't be zero"));
+			return false;
+		}
+		System.out.println(this.getSelectedMovie());//null
+		if(this.getSelectedMovie()==null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Please select a movie"));
+			return false;
+		}
+		System.out.println(this.getStreetAddress());
+		if(this.getStreetAddress()==null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Please enter a street address"));
+			return false;
+		}
+		System.out.println(this.getTime());//null
+		if(this.getTime()==null || this.getTime().length()<5 || this.getTime().charAt(2)!=':'){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid time format"));
+			return false;
+		}
+		System.out.println(this.getType());//null
+		if(this.getType()==null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Please select a restaurant type"));
+			return false;
+		}
+		System.out.println(this.getZipCode());
+		if(this.getZipCode()==null){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Zipcode can't be null"));
+			return false;
+		}
+		System.out.println(this.getDate());
+		System.out.println("-----End of Error Check----");
+		return true;
+	}
 	
 }

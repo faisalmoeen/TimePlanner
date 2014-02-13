@@ -117,7 +117,7 @@
                        <div class="col_160 float_l">
                        <h6>Starting Location Address</h6>
                             <div id="step1_form1">
-                                    <label for="streetAddress">Street Address:</label> <h:inputText id="streetAddress" value="#{userCriteria.streetAddress}"  styleClass="input_field_medium" maxlength="60"></h:inputText>
+                                    <label for="streetAddress">Street Address:</label> <h:inputText id="streetAddress" value="#{userCriteria.streetAddress}"  styleClass="input_field_medium" maxlength="60" required="true" > </h:inputText>
                                     <!-- <input name="streetAddress" type="text" class="input_field_medium" id="streetAddress" maxlength="60" /> -->
                                     <div class="cleaner_h10"></div>
                                     
@@ -157,9 +157,10 @@
                                     <!-- <input type="text" id="datepicker" class="input_field_small"/> -->
                                     <div class="cleaner_h10"></div>
         
-                                    <label for="time">Time:</label> 
+                                    <label for="time">Time (HH:MM):</label> 
                                     <h:inputText value="#{userCriteria.time}" id="time" maxlength="5" styleClass="input_field_small" >
-                                    	<f:ajax event="blur" execute="datepicker" render="movies" listener="#{userCriteria.updateMoviesListener()}"/>
+                                    	<f:ajax event="blur" execute="datepicker" render="movies errorMsg" listener="#{userCriteria.updateMoviesListener()}"/>
+                                    	<f:ajax render="errorMsg" />
                                     </h:inputText>
                                     </a4j:region>
                                     <h:outputText value="#{userCriteria.time}" id="out" />
@@ -172,7 +173,7 @@
                             <div id="step1_form3">
                             <h6>Restaurant Preferences</h6>
                                     <label for="type">Type:</label> 
-									<h:selectOneMenu value="#{userCriteria.type}" id="type" styleClass="input_field_small">
+									<h:selectOneMenu value="#{userCriteria.type}" id="type" styleClass="input_field_small" >
    										<f:selectItem itemValue="10" itemLabel="Restaurant" />
    										<f:selectItem itemValue="11" itemLabel="Bar" />
    										<f:selectItem itemValue="12" itemLabel="Cafe" />
@@ -219,7 +220,7 @@
                             <div id="step1_form4">
                             <h6>Movies Selection</h6>
                                     <label for="text">Movies:</label> 
-                                    <h:selectOneMenu value="#{userCriteria.selectedMovie}" id="movies" styleClass="input_field_medium">
+                                    <h:selectOneMenu value="#{userCriteria.selectedMovie}" id="movies" styleClass="input_field_medium" required="true">
    										<f:selectItems value="#{userCriteria.movies}" />
 									</h:selectOneMenu>
 									<!-- <h:selectManyMenu styleClass="input_field_medium">
@@ -229,9 +230,11 @@
 									</h:selectManyMenu> -->
                                     <!-- <textarea id="movies" name="movies" rows="0" cols="0" class="required"></textarea> -->
                                     <div class="cleaner_h10"></div>
+							<h:messages id="errorMsg" style="color:red;margin:8px;" globalOnly="true"/>
                             </div>
                            <a href="#step2"> <h:commandButton value="submit" styleClass="submit_btn float_l" action="#{userCriteria.callJanani()}">
                         		<a4j:ajax execute="@form" />
+                        		<f:ajax render="errorMsg" />
                     		</h:commandButton></a>
                             <!-- <input type="submit" class="submit_btn float_l" name="submit" id="submit" value="Submit" /> -->
 						</div>

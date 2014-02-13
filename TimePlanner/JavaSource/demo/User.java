@@ -10,8 +10,10 @@
  ******************************************************************************/
 package demo;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  * Created by JBoss Tools
@@ -33,6 +35,7 @@ public class User {
 	}
 
 	public String sayHello() {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("This is a test error message"));
 		return "greeting";
 	}
 }
