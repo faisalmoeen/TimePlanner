@@ -23,6 +23,9 @@ import java.text.SimpleDateFormat;
 import java.nio.*;
 import java.nio.charset.Charset;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,11 +54,15 @@ public class PublicTransport implements IPublicTransport {
 		URL url;
 		long screeningTime;
 		// optimum list of cinemas
-		List<Cinema> optimumCinemas = new ArrayList<Cinema>();
+		List<Cinema> optimumCinemas = null;
 		Route route = null;
 
+		if(cinemas.size()==0)
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No available cinemas"));
+		else
+		{
 		try {
-
+			optimumCinemas=new ArrayList<Cinema>();
 			for (int j = 0; j < cinemas.size(); j++) {
 				// format the json request
 				// append one destination per time in the http request
@@ -146,6 +153,9 @@ public class PublicTransport implements IPublicTransport {
 							// here we need a constructor fom the Cinema Class
 							optimumCinemas.add(new Cinema(cinemas.get(j).getTheaterName(), tempScreenArray, cinemas
 									.get(j).getAddress(), tempEndArray));
+						} else
+						{
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No movie screening reachable in timely manner!"));
 						}
 					}
 				}
@@ -165,7 +175,9 @@ public class PublicTransport implements IPublicTransport {
 				conn.disconnect();
 			}
 		}
-
+		
+		}
+		
 		return optimumCinemas;
 	}
 
@@ -189,19 +201,27 @@ public class PublicTransport implements IPublicTransport {
 				for (int j = 0; j < restaurants.size(); j++) {
 					Route route = calculateRoute(cinema.getAddress(),
 							(restaurants.get(j)).getRestaurantAddress(), "walking");
-	
+					if(route.getDuration()==0 || route.getDistance()==0)
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No route available!"));
+					else
+					{
 					crr.getRestaurantRouteList().put(restaurants.get(j), route);
+					}
 	
 				}
 	
 				allCinemasRestaurantsRoutes.add(crr);
+			} else
+			{
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No optimal restaurants for selected cinema!"));
 			}
 		}
 		IOptimization optimization = new Optimization();
 		
 		results = optimization.getOptimalCombination(allCinemasRestaurantsRoutes, maxDistance);
 
-		
+		if(results.size()==0)
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No optimal combinations!"));
 		
 		return results;
 	}
