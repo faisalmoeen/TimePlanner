@@ -8,6 +8,7 @@ var geocoder;
 
 function drawMarker(point, map, title, text,address) {
 	
+	
 	var contentString = '<div style="width:150px;height:70px" id="bubble">'
 		+ '<b>'+title+'</b>'
 		+ '<div id="fay">' + '<p>Address: '+address+'</p>'
