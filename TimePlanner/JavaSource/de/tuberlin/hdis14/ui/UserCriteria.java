@@ -18,6 +18,7 @@ import com.jaunt.ResponseException;
 
 import de.tuberlin.hdis14.cinema.Cinema;
 import de.tuberlin.hdis14.cinema.CinemaDetails;
+import de.tuberlin.hdis14.cinema.ICinemaDetails;
 import de.tuberlin.hdis14.restaurant.IRestaurant;
 import de.tuberlin.hdis14.restaurant.Restaurant;
 import de.tuberlin.hdis14.restaurant.RestaurantImpl;
@@ -40,7 +41,7 @@ public class UserCriteria {
 	private int maxDistance;
 	private Map<String,Object> movies;
 	private String selectedMovie="Kill Your Darlings";
-    private	String durationInfo;
+	private	String durationInfo;
 
 
 
@@ -50,24 +51,70 @@ public class UserCriteria {
 	private String optionRestaurant1="Amrit";
 	private String optionRestaurant2="Calcutta";
 	private String optionRestaurant3="Heer";
-	
+
 	//prateek's variable
 	List<Cinema> cinemaList;
-	
+
 	//State variable
 	Map<Cinema, Restaurant> selectedMap;
-	
+
 	public void updateMoviesListener()
 	{
 		movies = new LinkedHashMap<String,Object>();
-		movies.put("Kill Your Darlings", "Kill Your Darlings"); //label, value
-		movies.put("12 Years a Slave", "12 Years a Slave");
-		movies.put("The Wolf of Wall Street", "The Wolf of Wall Street");
-		movies.put("All Is Lost", "All Is Lost");
-		movies.put("Robocop", "Robocop");
+		ICinemaDetails checker=new CinemaDetails();
+
+		List<String> movieList;
+		try {
+			movieList = checker.getMovieList("berlin");
+			movieList=checker.removeDuplicates(movieList);
+			for(int i=0;i<movieList.size();i++)
+			{
+			
+				movies.put(movieList.get(i), movieList.get(i));
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		
+			movies.put("Kill Your Darlings", "Kill Your Darlings x"); //label, value
+			movies.put("Blue Jasmine (OmU)", "Blue Jasmine (OmU)");
+			movies.put("Dancing in Jaffa (OmU)", "Dancing in Jaffa (OmU)");
+			movies.put("Hannas Reise (OmU)", "Hannas Reise (OmU)");
+			movies.put("Robocop (OV)", "Robocop (OV)");
+			movies.put("Mandela: Der lange Weg zur Freiheit (OmU)", "Mandela: Der lange Weg zur Freiheit (OmU)");
+
+			movies.put("The Human Scale (OmU)", "The Human Scale (OmU)"); //label, value
+			movies.put("Blau ist eine warme Farbe (OmU)", "Blau ist eine warme Farbe (OmU)");
+			movies.put("The Act of Killing (OmU)", "The Act of Killing (OmU)");
+			movies.put("Les salauds - Dreckskerle (OmU)", "Les salauds - Dreckskerle (OmU)");
+			movies.put("Imagine (OmU)", "Imagine (OmU)");
+			movies.put("Dallas Buyers Club (OV)", "Dallas Buyers Club (OV)");
+			movies.put("Art War (OmU)", "Art War (OmU)"); //label, value
+			movies.put("Free Birds (OV)", "Free Birds (OV)");
+			movies.put("American Hustle (OV)", "American Hustle (OV)");
+			movies.put("Kill Your Darlings (OmU)", "Kill Your Darlings (OmU)");
+			movies.put("The Wolf of Wall Street (OmU)", "The Wolf of Wall Street (OmU)");
+			movies.put("12 Years a Slave (OV)", "12 Years a Slave (OV)");
+			movies.put("Inside Llewyn Davis (OmU)", "Inside Llewyn Davis (OmU)"); //label, value
+			movies.put("Searching for Sugar Man (OmU)", "Searching for Sugar Man (OmU)");
+			movies.put("Winter's Tale (OV)", "Winter's Tale (OV)");
+			movies.put("12 Years a Slave (OmU)", "12 Years a Slave (OmU)");
+			movies.put("Only Lovers Left Alive (OmU)", "Only Lovers Left Alive (OmU)");
+			movies.put("Mandela: Der lange Weg zur Freiheit (OV)", "Mandela: Der lange Weg zur Freiheit (OV)");
+			movies.put("All Is Lost (OV)", "All Is Lost (OV)"); //label, value
+			movies.put("The Wolf of Wall Street (OV)", "The Wolf of Wall Street (OV)");
+			movies.put("Das erstaunliche Leben des Walter Mitty (OV)", "Das erstaunliche Leben des Walter Mitty (OV)");
+			movies.put("Houston (OmU)", "Houston (OmU)");
+			movies.put("A Touch of Sin (OmU)", "A Touch of Sin (OmU)");
+			movies.put("Charlie Mariano - Last Visits (OmU)", "Charlie Mariano - Last Visits (OmU)");
+			movies.put("Gravity (OV)", "Gravity (OV)");
+			movies.put("Disconnect (OmU)", "Disconnect (OmU)");
+			movies.put("I Used to Be Darker (OmU)", "I Used to Be Darker (OmU)");
+			System.out.println("can't get from the automatic methods");
+		}
 		this.setSelectedMovie("Kill Your Darlings");
 		System.out.println("update movies being called");
-	//	System.out.println(this.date);
+		//	System.out.println(this.date);
 	}
 	public String getSelectedMovie() {
 		return selectedMovie;
@@ -83,21 +130,21 @@ public class UserCriteria {
 	}
 
 	public void callPrateek() throws NodeNotFound, ResponseException{
-		CinemaDetails check=new CinemaDetails();
+		ICinemaDetails check=new CinemaDetails();
 
 
 		this.cinemaList = check.getCinemaDetails("berlin", this.selectedMovie); 
-		                             //(only city name, movieName)
-		
+		//(only city name, movieName)
+
 	}
 	public void setMovies(Map<String, Object> coffee2Value) {
 		this.movies = coffee2Value;
 	}
 
 	static{
-		
+
 	}
-	
+
 	public UserCriteria() {
 		System.out.println("I am alive");
 	}
@@ -184,8 +231,8 @@ public class UserCriteria {
 	public void setMaxDistance(int maxDistance) {
 		this.maxDistance = maxDistance;
 	}
-	
-	
+
+
 
 	public String getOptionCinema1() {
 		return optionCinema1;
@@ -223,7 +270,7 @@ public class UserCriteria {
 	public void setOptionRestaurant3(String optionRestaurant3) {
 		this.optionRestaurant3 = optionRestaurant3;
 	}
-	
+
 	public void callJanani()
 	{
 		FacesContext.getCurrentInstance().getAttributes().put("maxDistance", getMaxDistance());
@@ -250,35 +297,35 @@ public class UserCriteria {
 		}
 		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
 		this.selectedMap=mapReturned;
-		
-		
-		 Iterator<Entry<Cinema, Restaurant>> it = mapReturned.entrySet().iterator();
-		 int i=1;
-	       Restaurant restaurant=null;
-	        Cinema cinema = null;
-	        Map.Entry<Cinema, Restaurant> pairs = null;
-		    while (it.hasNext()) {
-		       pairs = it.next();
-		        System.out.println(pairs.getKey() + " = " + pairs.getValue());
-		        cinema = pairs.getKey();
-		        restaurant = pairs.getValue();
-		        if(i==1){
-		        	optionCinema1 = cinema.getTheaterName();
-		        	optionRestaurant1 = restaurant.getName();
-		        }else if(i==2){
-		        	optionCinema2 =cinema.getTheaterName();
-		        	optionRestaurant2 = restaurant.getName();
-		        	
-		        }else if(i==3){
-		        	optionCinema3 =cinema.getTheaterName();
-		        	optionRestaurant3 = restaurant.getName();
-		        }
-		        i++;
-		        //it.remove(); 
-		    }
-	   
+
+
+		Iterator<Entry<Cinema, Restaurant>> it = mapReturned.entrySet().iterator();
+		int i=1;
+		Restaurant restaurant=null;
+		Cinema cinema = null;
+		Map.Entry<Cinema, Restaurant> pairs = null;
+		while (it.hasNext()) {
+			pairs = it.next();
+			System.out.println(pairs.getKey() + " = " + pairs.getValue());
+			cinema = pairs.getKey();
+			restaurant = pairs.getValue();
+			if(i==1){
+				optionCinema1 = cinema.getTheaterName();
+				optionRestaurant1 = restaurant.getName();
+			}else if(i==2){
+				optionCinema2 =cinema.getTheaterName();
+				optionRestaurant2 = restaurant.getName();
+
+			}else if(i==3){
+				optionCinema3 =cinema.getTheaterName();
+				optionRestaurant3 = restaurant.getName();
+			}
+			i++;
+			//it.remove(); 
+		}
+
 	}
-	
+
 	private boolean validateInputs()
 	{
 		System.out.println("------Error Check-----");
@@ -327,5 +374,5 @@ public class UserCriteria {
 		System.out.println("-----End of Error Check----");
 		return true;
 	}
-	
+
 }
