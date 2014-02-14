@@ -21,7 +21,7 @@ public class CinemaRestaurantRoute {
 		this.restaurantList = new ArrayList<Restaurant>();
 		this.routeList = new ArrayList<Route>();
 	}
-
+// 
 	public Cinema getCinema() {
 		return cinema;
 	}

@@ -512,6 +512,7 @@ public class PublicTransport implements IPublicTransport {
 		}
 		
 	*/
+		//
 		String[] t = {  "20:00", "22:00" };
 		int[] temp2 = { 1392234163, 1392241363 };
 		Cinema c = new Cinema("Sony Center", t,"Theodor Heuss Platz 5,Berlin,DE", temp2);
