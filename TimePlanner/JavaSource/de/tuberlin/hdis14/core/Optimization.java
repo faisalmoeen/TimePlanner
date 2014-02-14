@@ -1,10 +1,14 @@
 package de.tuberlin.hdis14.core;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.faces.context.FacesContext;
 
 import de.tuberlin.hdis14.cinema.Cinema;
 import de.tuberlin.hdis14.publictransport.CinemaRestaurantRoute;
@@ -17,13 +21,16 @@ public class Optimization implements IOptimization {
 	private List<OptimalCombination> optimalCombinations;
 	
 	//Optimization Parameters
-//	private int weightTripDuration = 1;
+	private int weightTripDuration = 1;
 	private int factorWalkingDistance = 20;
 	private int maxOptimalCombinations = 3;
 	
 	//TODO: Exceptions im Fail Fall
 	@Override
 	public Map<Cinema, Restaurant> getOptimalCombination(List<CinemaRestaurantRoute> cinemaRestList, int maxDistance) {
+		System.out.println("Entering Optimization");
+		System.out.println("Got " + cinemaRestList.size() + " combinations");
+		
 		optimalCombinationsTemp = new ArrayList<OptimalCombination>();
 		getOptimalCombinationTemp(cinemaRestList);
 		
@@ -42,10 +49,13 @@ public class Optimization implements IOptimization {
 
 	private Map<Cinema, Restaurant> createReturnValue() {
 		Map<Cinema, Restaurant> threeOptimcalCombinations = new HashMap<Cinema, Restaurant>();
+		System.out.println("Found " + optimalCombinations.size() + " optimal combinations");
 		for(OptimalCombination combination : optimalCombinations)
 		{
 			threeOptimcalCombinations.put(combination.getCinema(), combination.getRestaurant());
-			
+			System.out.println("----- Cinema "+ combination.getCinema().getTheaterName());
+			System.out.println("Restaurant " + combination.getRestaurant().getName());
+			System.out.println("WeightedDurationOfTrip " + combination.getWeight() + " -----");
 		}
 		return threeOptimcalCombinations;
 	}
@@ -86,24 +96,74 @@ public class Optimization implements IOptimization {
 			List<CinemaRestaurantRoute> cinemaRestList) {
 		for(CinemaRestaurantRoute cinemaInstance: cinemaRestList)
 		{
-			long weightedDurationOfTrip = 1; //durationOfTrip * weightTripDuration;
+			String departureTime = (String) FacesContext.getCurrentInstance().getAttributes().get("departureTime"); //"20:00";
+			int maxDistance = Integer.parseInt("500"); 
+//			String blb = 		(String) FacesContext.getCurrentInstance().getAttributes().get("maxDistance");
+
+			Calendar cal = Calendar.getInstance();
+
+            String tm[]= departureTime.split(":");
+
+			cal.set(Calendar.HOUR, Integer.parseInt(tm[0]));
+			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1]));
+			cal.set(Calendar.SECOND, 0);
+			long startTimeFromUser = cal.getTimeInMillis();
 			
+			tm = cinemaInstance.getCinema().getScreeningTime()[0].split(":");
+			cal.set(Calendar.HOUR, Integer.parseInt(tm[0]));
+			cal.set(Calendar.MINUTE, Integer.parseInt(tm[1]));
+			cal.set(Calendar.SECOND, 0);
+			
+			long startTimeFromCinema = cal.getTimeInMillis(); 
+						
+			long durationOfTrip = startTimeFromCinema - startTimeFromUser;
+			long weightedDurationOfTrip = durationOfTrip * weightTripDuration;
 			long weightedWalkingDistance;
-			Restaurant restaurantTemp = new Restaurant();
+			
+//			System.out.println("Got " + cinemaInstance.getRestaurantList().size() + " combinations");
+			
+//			Iterator<Entry<Restaurant, Route>> iterator = cinemaInstance.getRouteList().entrySet().iterator();
+//			while(iterator.hasNext())
+			
 			for(int i=0;i<cinemaInstance.getRouteList().size();i++)
 			{
-				int temp = (cinemaInstance.getRouteList().get(i)).getDistance();
+//				Entry<Restaurant, Route>restaurantRouteInstance = iterator.next();
+				int temp = (cinemaInstance.getRouteList().get(i)).getDistance() / maxDistance;
 				
-				//int temp = restaurantRouteInstance.getValue().getDistance(); // / userCriteria.getMaxDistance();
+				
 				weightedWalkingDistance = temp * factorWalkingDistance;
 				
 				optimalCombinationsTemp.add(new OptimalCombination(
 						cinemaInstance.getCinema(),
-						restaurantTemp,
+						(Restaurant)cinemaInstance.getRestaurantList().get(i),
 						weightedDurationOfTrip, 
 						weightedWalkingDistance));
+				System.out.println("added to optimal combination:");
+				System.out.println("Cinema" + cinemaInstance.getCinema().getTheaterName());
+				System.out.println("Restaurant " + cinemaInstance.getRestaurantList().get(i).getName());
+				System.out.println("WeightedDurationOfTrip " + weightedDurationOfTrip);
+				System.out.println("WeightedWalkingDistance " + weightedWalkingDistance);
 			}
+			
+			
+			
+			
+//			for(Entry<Restaurant, Route> restaurantRouteInstance : cinemaInstance.getRestaurantRouteList().entrySet())
+//			{
+//				int temp = restaurantRouteInstance.getValue().getDistance(); // / userCriteria.getMaxDistance();
+//				weightedWalkingDistance = temp * factorWalkingDistance;
+//				
+//				optimalCombinationsTemp.add(new OptimalCombination(
+//						cinemaInstance.getCinema(),
+//						(Restaurant)restaurantRouteInstance.getKey(),
+//						weightedDurationOfTrip, 
+//						weightedWalkingDistance));
+//				System.out.println("added to optimal combination:");
+//				System.out.println("Cinema" + cinemaInstance.getCinema().getTheaterName());
+//				System.out.println("Restaurant" + restaurantRouteInstance.getKey().getName());
+//			}
 		}
+		System.out.println("Added " + optimalCombinationsTemp.size() + " to optimalCombinationsTemp\n");
 	}
 
 }

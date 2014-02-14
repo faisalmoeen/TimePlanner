@@ -1,9 +1,6 @@
 package de.tuberlin.hdis14.core;
 
-import java.util.Map;
-
 import de.tuberlin.hdis14.cinema.Cinema;
-import de.tuberlin.hdis14.publictransport.CinemaRestaurantRoute;
 import de.tuberlin.hdis14.restaurant.Restaurant;
 
 public class OptimalCombination  {

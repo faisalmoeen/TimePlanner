@@ -63,6 +63,19 @@ public class PublicTransport implements IPublicTransport {
 		try {
 			optimumCinemas=new ArrayList<Cinema>();
 			for (int j = 0; j < cinemas.size(); j++) {
+				System.out.println(".............cinema");
+				System.out.println(j);
+				
+				System.out.println("screening times:");
+		
+				String[] arr= cinemas.get(j).getScreeningTime();
+				for (int m=0; m<arr.length;m++)
+				{
+			
+					System.out.println("..........."+arr[m]);
+					
+					
+				}
 				// format the json request
 				// append one destination per time in the http request
 				StringBuilder sb = new StringBuilder(DISTANCE_MATRIX_API_BASE);
@@ -70,6 +83,7 @@ public class PublicTransport implements IPublicTransport {
 				String startAdd = URLEncoder.encode(startAddress,"UTF-8");
 				sb.append("?origins=" + startAdd + "&destinations=");
 				String cinemaAddress = URLEncoder.encode(cinemas.get(j).getAddress(),"UTF-8");
+				System.out.println(cinemas.get(j).getAddress());
 				sb.append(cinemaAddress);
 				sb.append("&sensor=false");
 				sb.append("&mode=transit");
@@ -85,8 +99,12 @@ public class PublicTransport implements IPublicTransport {
 				while ((read = in.read(buff)) != -1) {
 					DistanceMatrixResults.append(buff, 0, read);
 				}
-				
+				System.out.println(DistanceMatrixResults.toString());
 				JSONObject rootObject = new JSONObject(DistanceMatrixResults.toString());
+				
+				
+				System.out.println("Content of RootObject");
+				System.out.println(rootObject.toString());
 				
 				// Get all JSONArray rows
 				JSONArray destinationAddress = rootObject.getJSONArray("destination_addresses");
@@ -99,7 +117,7 @@ public class PublicTransport implements IPublicTransport {
 				JSONArray origin_addresses = rootObject.getJSONArray("origin_addresses");
 				System.out.println("Origin Addresses\t"+origin_addresses.toString());
 				JSONArray rows = rootObject.getJSONArray("rows");
-				//System.out.println("row element\t"+rows.toString());
+				System.out.println("row element\t"+rows.toString());
 
 				// departure time: 18:50. COnvert to Unix timestamp for the
 				// requests
@@ -143,9 +161,9 @@ public class PublicTransport implements IPublicTransport {
 							//System.out.println("***********check which screening times user can catch");
 							if (duration.getInt("value") <= screeningTime - departure) {
 								// include this screening time to the result
-								//System.out.println("get screening times string\t"+ cinemas.get(j).getScreeningTime()[k]);
+								System.out.println("get screening times string\t"+ cinemas.get(j).getScreeningTime()[k]);
 								tempScreens.add(cinemas.get(j).getScreeningTime()[k]);
-								//System.out.println("user catches these screenings\t"+tempScreens.toString());
+								System.out.println("user catches these screenings\t"+tempScreens.toString());
 								// include this screening's time endtime to the
 								// result
 								Integer temp = cinemas.get(j).getMovieEndTime()[k];
@@ -153,7 +171,7 @@ public class PublicTransport implements IPublicTransport {
 								//System.out.println("end times for the screenings\t"+ endTimes+ "\t"+ cinemas.get(j).getMovieEndTime()[k]);
 
 							}
-							//System.out.println("***********end of for*******");
+							System.out.println("***********end of for*******");
 						}
 
 						// users can catch at least one screening
@@ -176,6 +194,7 @@ public class PublicTransport implements IPublicTransport {
 						}
 					}
 				}
+				DistanceMatrixResults.setLength(0);
 			}
 
 		} catch (MalformedURLException e) {
@@ -194,7 +213,7 @@ public class PublicTransport implements IPublicTransport {
 		}
 		
 		}
-		
+		System.out.println("How many cinemas returned......."+optimumCinemas.size());
 		return optimumCinemas;
 	}
 
