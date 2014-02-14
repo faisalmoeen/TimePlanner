@@ -87,7 +87,17 @@ public class PublicTransport implements IPublicTransport {
 				}
 				
 				JSONObject rootObject = new JSONObject(DistanceMatrixResults.toString());
+				
 				// Get all JSONArray rows
+				JSONArray destinationAddress = rootObject.getJSONArray("destination_addresses");
+				System.out.println("Destination addresses\t"+destinationAddress.toString());
+				// Loop over each each destination address
+				/*for (int i = 0; i < destinationAddress.length(); i++) {
+					JSONObject row = destinationAddress.getJSONObject(i);
+				
+				}*/
+				JSONArray origin_addresses = rootObject.getJSONArray("origin_addresses");
+				System.out.println("Origin Addresses\t"+origin_addresses.toString());
 				JSONArray rows = rootObject.getJSONArray("rows");
 				//System.out.println("row element\t"+rows.toString());
 
@@ -110,6 +120,14 @@ public class PublicTransport implements IPublicTransport {
 					for (int i1 = 0; i1 < elements.length(); i1++) {
 						// Get the element object
 						JSONObject element = elements.getJSONObject(i1);
+						//get status object
+						String status = element.getString("status");
+						System.out.println("Status of the request for route\t"+status.toString());
+						if (!status.equals("OK"))
+						{
+							System.out.println("Sorry no route found for this address.\nPlease insert a new address");
+							break;
+						}
 						// Get duration sub object
 						JSONObject duration = element.getJSONObject("duration");
 						// Get distance sub object
