@@ -110,10 +110,10 @@
                             
                         </div>
                     </div> <!-- end of home -->
-                    
-                    <div class="panel" id="step1">
                     <h:form><!--  method="post" name="step1form" action="#step1"> -->
                     <f:view>
+                    <div class="panel" id="step1">
+                    
                         
                        <div class="col_160 float_l">
                        <h6>Starting Location Address</h6>
@@ -234,13 +234,18 @@
 							<h:messages id="errorMsg" style="color:red;margin:8px;" globalOnly="true"/>
                             </div>
                            <a href="#step2"> <h:commandButton value="submit" styleClass="submit_btn float_l" action="#{userCriteria.callJanani()}">
-                        		<a4j:ajax execute="@form" />
-                        		<f:ajax render="errorMsg" />
+                        		<a4j:ajax execute="@form" render="errorMsg cinema1 cinema2 cinema3 restaurant1 restaurant2 restaurant3"/>
+                        		<!-- <a4j:ajax render="errorMsg cinema1" />
+                        		<f:ajax render="cinema1" />
+                        		<f:ajax render="cinema2" />
+                        		<f:ajax render="cinema3" />
+                        		<f:ajax render="restaurant1" />
+                        		<f:ajax render="restaurant2" />
+                        		<f:ajax render="restaurant3" /> -->
                     		</h:commandButton></a>
                             <!-- <input type="submit" class="submit_btn float_l" name="submit" id="submit" value="Submit" /> -->
 						</div>
-						</f:view>
-						</h:form>
+						
                   </div>
                     
                     <div class="panel" id="step2">
@@ -249,8 +254,8 @@
                         	<a href="#step3" id="UserChose1"><h3>Option 1</h3></a>
                          
                             <ul class="service_list">
-                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema1}"/></a></li>   
-                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant1}" /></a></li>
+                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema1}" id="cinema1"/></a></li>   
+                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant1}" id="restaurant1"/></a></li>
                                 
                             </ul>
                         </div>
@@ -258,8 +263,8 @@
                         	<a href="#step3" id="UserChose2"><h3>Option 2</h3></a>
                             
                             <ul class="service_list">
-                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema2}" /></a></li>   
-                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant2}" /></a></li>
+                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema2}" id="cinema2"/></a></li>   
+                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant2}" id="restaurant2"/></a></li>
                                 
                             </ul>
                         </div>
@@ -267,12 +272,14 @@
                         	<a href="#step3" id="UserChose3"><h3>Option 3</h3></a>
                             
                             <ul class="service_list">
-                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema3}" /></a></li>   
-                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant3}" /></a></li>
+                                <li><a href="#" class="service_five"><h:outputText value="#{userCriteria.optionCinema3}" id="cinema3"/></a></li>   
+                                <li><a href="#" class="service_one"><h:outputText value="#{userCriteria.optionRestaurant3}" id="restaurant3"/></a></li>
                                 
                             </ul>
                          </div>
-                    </div>          
+                    </div>        
+                    </f:view>
+			</h:form>  
 <!-- @Fay********************************************************************************************** -->
 						<div class="panel" id="step3">
 							<h1>Option1: Cinema &amp; Restaurant</h1>

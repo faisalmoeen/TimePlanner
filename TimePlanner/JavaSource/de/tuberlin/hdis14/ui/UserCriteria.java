@@ -235,6 +235,7 @@ public class UserCriteria {
 
 
 	public String getOptionCinema1() {
+		System.out.println("cinema1 called");
 		return optionCinema1;
 	}
 	public void setOptionCinema1(String optionCinema1) {
@@ -295,6 +296,7 @@ public class UserCriteria {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		this.optionCinema1="hahaha";
 		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
 		this.selectedMap=mapReturned;
 
