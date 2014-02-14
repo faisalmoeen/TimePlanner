@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.common.collect.Multiset.Entry;
+
 public class PublicTransport implements IPublicTransport {
 
 	private static final String DIRECTIONS_API_BASE = "https://maps.googleapis.com/maps/api/directions";
@@ -282,6 +284,13 @@ public class PublicTransport implements IPublicTransport {
 
 		if(results.size()==0)
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No optimal combinations!"));
+		
+		System.out.println("RESULTS SIZE:::::::::::::::::::" + results.size());
+		for(java.util.Map.Entry<Cinema, Restaurant> e: results.entrySet())
+		{
+			System.out.println("CINEMA::::::::::::::" + (e.getKey()).getAddress());
+			System.out.println("RESTAURANT:::::" + (e.getValue()).getRestaurantAddress());
+		}
 		
 		return results;
 	}

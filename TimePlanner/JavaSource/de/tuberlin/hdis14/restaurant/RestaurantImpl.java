@@ -178,7 +178,19 @@ public Map<Cinema, Restaurant> fromFaisal(String startLocation, String startTime
 			listCinemaRest.add(cinemaRestList);
 		}
 		
+		
+		
 		Map<Cinema, Restaurant> optmCinemaRest = PublicTransport.getInstance().callJelena2(listCinemaRest, maxDistance);
+		
+		System.out.println("JANANI::::::::::::::::::::::::::::::::::::::::::::::::::::::optim cinemas................................");
+		System.out.println("RESULTS SIZE:::::::::::::::::::" + optmCinemaRest.size());
+		for(java.util.Map.Entry<Cinema, Restaurant> e: optmCinemaRest.entrySet())
+		{
+			System.out.println("CINEMA::::::::::::::" + (e.getKey()).getAddress());
+			System.out.println("RESTAURANT:::::" + (e.getValue()).getRestaurantAddress());
+		}
+
+	
 		
 		return optmCinemaRest;
 	}

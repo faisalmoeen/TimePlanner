@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -298,33 +299,59 @@ public class UserCriteria {
 		}
 //		this.optionCinema1="hahaha";
 		Map<Cinema, Restaurant> mapReturned = refRestaurant.fromFaisal(startLocation, this.time, this.cinemaList, this.cuisine, this.type,this.maxDistance);
-		this.selectedMap=mapReturned;
-
-
-		Iterator<Entry<Cinema, Restaurant>> it = mapReturned.entrySet().iterator();
-		int i=1;
-		Restaurant restaurant=null;
-		Cinema cinema = null;
-		Map.Entry<Cinema, Restaurant> pairs = null;
-		while (it.hasNext()) {
-			pairs = it.next();
-			System.out.println(pairs.getKey() + " = " + pairs.getValue());
-			cinema = pairs.getKey();
-			restaurant = pairs.getValue();
-			if(i==1){
-				optionCinema1 = cinema.getTheaterName();
-				optionRestaurant1 = restaurant.getName();
-			}else if(i==2){
-				optionCinema2 =cinema.getTheaterName();
-				optionRestaurant2 = restaurant.getName();
-
-			}else if(i==3){
-				optionCinema3 =cinema.getTheaterName();
-				optionRestaurant3 = restaurant.getName();
-			}
-			i++;
-			//it.remove(); 
+		
+		
+		System.out.println("JANANI::::::::::::::::::::: AGAIN ::::::::::::::::::::::::::::::::optim cinemas................................");
+		System.out.println("RESULTS SIZE:::::::::::::::::::" + mapReturned.size());
+		for(java.util.Map.Entry<Cinema, Restaurant> e: mapReturned.entrySet())
+		{
+			System.out.println("CINEMA::::::::::::::" + (e.getKey()).getAddress());
+			System.out.println("RESTAURANT:::::" + (e.getValue()).getRestaurantAddress());
 		}
+		
+		this.selectedMap=mapReturned;
+int i=0;
+		for(java.util.Map.Entry<Cinema, Restaurant> e: mapReturned.entrySet())
+		{
+			System.out.println("CINEMA::::::::::::::" + (e.getKey()).getAddress());
+			System.out.println("RESTAURANT:::::" + (e.getValue()).getRestaurantAddress());
+			if(i==1){
+				this.optionCinema1 = e.getKey().getTheaterName();
+			this.optionRestaurant1 = e.getValue().getName();
+		}else if(i==2){
+				this.optionCinema2 = e.getKey().getTheaterName();
+			this.optionRestaurant2 = e.getValue().getName();
+		}else if(i==3){
+			this.optionCinema3 = e.getKey().getTheaterName();
+			this.optionRestaurant3 = e.getValue().getName();
+		}
+			i++;
+			
+		}
+//		int i=1;
+//		Restaurant restaurant=null;
+//		Cinema cinema = null;
+//		Map.Entry<Cinema, Restaurant> pairs = null;
+//		while (it.hasNext()) {
+//			System.out.println("Iterating trough the Map");
+//			pairs = it.next();
+//			System.out.println("Pairs Key:" + pairs.getKey() + " = " + "Value:" + pairs.getValue().getName());
+//			cinema = pairs.getKey();
+//			restaurant = pairs.getValue();
+//			if(i==1){
+//				optionCinema1 = cinema.getTheaterName();
+//				optionRestaurant1 = restaurant.getName();
+//			}else if(i==2){
+//				optionCinema2 =cinema.getTheaterName();
+//				optionRestaurant2 = restaurant.getName();
+//
+//			}else if(i==3){
+//				optionCinema3 =cinema.getTheaterName();
+//				optionRestaurant3 = restaurant.getName();
+//			}
+//			i++;
+//			//it.remove(); 
+//		}
 
 	}
 

@@ -128,7 +128,7 @@ public class Optimization implements IOptimization {
 			for(int i=0;i<cinemaInstance.getRouteList().size();i++)
 			{
 //				Entry<Restaurant, Route>restaurantRouteInstance = iterator.next();
-				int temp = (cinemaInstance.getRouteList().get(i)).getDistance() / maxDistance;
+				int temp = (cinemaInstance.getRouteList().get(i)).getDistance();// / maxDistance;
 				
 				
 				weightedWalkingDistance = temp * factorWalkingDistance;
