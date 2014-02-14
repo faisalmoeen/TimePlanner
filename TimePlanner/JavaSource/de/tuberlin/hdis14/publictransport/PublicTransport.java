@@ -174,7 +174,7 @@ public class PublicTransport implements IPublicTransport {
 							System.out.println("***********end of for*******");
 						}
 
-						// users can catch at least one screening
+						// users can catch at least one screening 
 						if (tempScreens.size() > 0) {
 							// since there are screenings times, endtimes have
 							// to be copied too
