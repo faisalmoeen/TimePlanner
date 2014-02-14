@@ -55,7 +55,6 @@ public class PublicTransport implements IPublicTransport {
 		long screeningTime;
 		// optimum list of cinemas
 		List<Cinema> optimumCinemas = null;
-		Route route = null;
 
 		if(cinemas.size()==0)
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No available cinemas"));
@@ -190,26 +189,49 @@ public class PublicTransport implements IPublicTransport {
 		Map<Cinema, Restaurant> results = new HashMap<Cinema, Restaurant>();
 		
 		List<CinemaRestaurantRoute> allCinemasRestaurantsRoutes = new ArrayList<CinemaRestaurantRoute>();
-
+		
+		Route route=null; 
+		
 		for (int i = 0; i < cinRest.size(); i++) {
 			Cinema cinema = (cinRest.get(i)).getCinema();
 			CinemaRestaurantRoute crr = new CinemaRestaurantRoute(cinema);
+			
 			if ((cinRest.get(i)).getRestaurantList() != null )
 			{
 				List<Restaurant> restaurants = (cinRest.get(i)).getRestaurantList();
-				
+				System.out.println(".............ROUTE................");
 				for (int j = 0; j < restaurants.size(); j++) {
-					Route route = calculateRoute(cinema.getAddress(),
+					 route = calculateRoute(cinema.getAddress(),
 							(restaurants.get(j)).getRestaurantAddress(), "walking");
-					if(route.getDuration()==0 || route.getDistance()==0)
+				
+					if(route==null || route.getDuration()==0 || route.getDistance()==0)
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No route available!"));
 					else
 					{
-					crr.getRestaurantRouteList().put(restaurants.get(j), route);
+						
+						
+						crr.getRestaurantList().add(restaurants.get(j));
+				     	crr.getRouteList().add(route);
+				     	
+				     			
 					}
 	
 				}
-	
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>IN LIST<<<<<<<<<<<<<<<<<<<<<<<<");
+				 for (int k=0;k<crr.getRouteList().size();k++) {
+					 
+					  // Cinema ccc= (Cinema)entry.getKey();
+					   Route rout= crr.getRouteList().get(k);
+					   
+					   System.out.println("Duration.............");
+						System.out.println(rout.getDuration());
+						System.out.println("Distance.............");
+						System.out.println(rout.getDistance());
+						
+					  //  System.out.println(ccc.getAddress() + ", " + rrr.getRestaurantAddress());
+				 }
+				 
+				//System.out.println("SIZEEE+++!!"+(crr.getRestaurantRouteList()).size());
 				allCinemasRestaurantsRoutes.add(crr);
 			} else
 			{
@@ -218,6 +240,7 @@ public class PublicTransport implements IPublicTransport {
 		}
 		IOptimization optimization = new Optimization();
 		
+	
 		results = optimization.getOptimalCombination(allCinemasRestaurantsRoutes, maxDistance);
 
 		if(results.size()==0)
@@ -240,6 +263,7 @@ public class PublicTransport implements IPublicTransport {
 		try {
 			startAd = URLEncoder.encode(startAddress,"UTF-8");
 			endAd = URLEncoder.encode(endAddress,"UTF-8");
+			
 			StringBuilder sb = new StringBuilder(DIRECTIONS_API_BASE);
 			sb.append(OUT_JSON);
 			sb.append("?origin=" + startAd);
@@ -306,11 +330,20 @@ public class PublicTransport implements IPublicTransport {
 					route.setStart_address(legObject.getString("start_address"));
 
 					route.setEnd_address(legObject.getString("end_address"));
+					
+								
 
 				}
+				
+			
 
 			}
-
+			System.out.println("______________IN CALCULATE ROUTE__________________");
+			System.out.println("Start address.............");
+			System.out.println(route.getDuration());
+			System.out.println("End address.............");
+			System.out.println(route.getDistance());
+			System.out.println("__________________________________________________");
 		} catch (JSONException e) {
 			System.out.println("LOG_TAG, Error processing JSON results"
 					+ e.toString());
@@ -439,10 +472,10 @@ public class PublicTransport implements IPublicTransport {
 		return unixtime;
 	}
 
-	/*for testing...............................
+	//for testing...............................
 
 	public static void main(String[] args) {
-
+		/*
 		List<Cinema> rts = new ArrayList<Cinema>();
 		String startAddre = "Marchstrasse 3,Berlin,DE";
 
@@ -478,13 +511,21 @@ public class PublicTransport implements IPublicTransport {
 			
 		}
 		
+	*/
+		String[] t = {  "20:00", "22:00" };
+		int[] temp2 = { 1392234163, 1392241363 };
+		Cinema c = new Cinema("Sony Center", t,"Theodor Heuss Platz 5,Berlin,DE", temp2);
+		PublicTransport pt = new PublicTransport();
 		Restaurant r= new Restaurant("Friedrichstrasse 120,Berlin,DE");
 
 		Restaurant rr= new Restaurant("Friedrichstrasse 150,Berlin,DE");
 		
+		Restaurant rrr= new Restaurant("Landsberger Alle 52,Berlin,DE");
+		
 		 List<Restaurant> restaurantList= new ArrayList<Restaurant>();
 		 restaurantList.add(r);
 		 restaurantList.add(rr);
+		 restaurantList.add(rrr);
 		 
 		 CinemaRestaurant cr= new CinemaRestaurant(c, restaurantList);
 		 
@@ -493,17 +534,10 @@ public class PublicTransport implements IPublicTransport {
 		 
 		 Map<Cinema, Restaurant> cinrest= pt.callJelena2(listcinrest, 10);	
 		 
-		 for (Map.Entry entry : cinrest.entrySet()) {
-			 
-			   Cinema ccc= (Cinema)entry.getKey();
-			   Restaurant rrr= (Restaurant)entry.getValue();
-			   
-			    System.out.println(ccc.getAddress() + ", " + rrr.getRestaurantAddress());
-		 }
+	
 
 	}
 	
-	*/
 
 	// ..........................................
 }

@@ -90,9 +90,11 @@ public class Optimization implements IOptimization {
 			
 			long weightedWalkingDistance;
 			Restaurant restaurantTemp = new Restaurant();
-			for(Entry<Restaurant, Route> restaurantRouteInstance : cinemaInstance.getRestaurantRouteList().entrySet())
+			for(int i=0;i<cinemaInstance.getRouteList().size();i++)
 			{
-				int temp = restaurantRouteInstance.getValue().getDistance(); // / userCriteria.getMaxDistance();
+				int temp = (cinemaInstance.getRouteList().get(i)).getDistance();
+				
+				//int temp = restaurantRouteInstance.getValue().getDistance(); // / userCriteria.getMaxDistance();
 				weightedWalkingDistance = temp * factorWalkingDistance;
 				
 				optimalCombinationsTemp.add(new OptimalCombination(

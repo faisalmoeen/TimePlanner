@@ -1,5 +1,6 @@
 package de.tuberlin.hdis14.publictransport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,15 @@ import de.tuberlin.hdis14.restaurant.*;
 public class CinemaRestaurantRoute {
 	
 	private Cinema cinema;
-
-    Map<Restaurant,Route> restaurantRouteList;
+    List<Restaurant> restaurantList;
+    List<Route> routeList;
     
    
 	public CinemaRestaurantRoute(Cinema cinema) {
 
 		this.cinema = cinema;
-		this.restaurantRouteList = new HashMap<Restaurant, Route>();
+		this.restaurantList = new ArrayList<Restaurant>();
+		this.routeList = new ArrayList<Route>();
 	}
 
 	public Cinema getCinema() {
@@ -28,14 +30,23 @@ public class CinemaRestaurantRoute {
 		this.cinema = cinema;
 	}
 
-	public Map<Restaurant, Route> getRestaurantRouteList() {
-		return restaurantRouteList;
+	public List<Restaurant> getRestaurantList() {
+		return restaurantList;
 	}
 
-	public void setRestaurantRouteList(Map<Restaurant, Route> restaurantRouteList) {
-		this.restaurantRouteList = restaurantRouteList;
+	public void setRestaurantList(List<Restaurant> restaurantList) {
+		this.restaurantList = restaurantList;
 	}
-	
+
+	public List<Route> getRouteList() {
+		return routeList;
+	}
+
+	public void setRouteList(List<Route> routeList) {
+		this.routeList = routeList;
+	}
+
+
 	
 
  
